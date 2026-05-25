@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Salman Ahmed | Cybersecurity & Infrastructure</title>
+  <meta name="description" content="Salman Ahmed â Cybersecurity student at Carleton University. Virtualization & Infrastructure Co-op at DND. Level II Secret Clearance." />
+  <style>
+    /* ââ TOKENS âââââââââââââââââââââââââââââââââââââ */
+    :root {
+      --bg:          #07070f;
+      --bg2:         #0d0d1a;
+      --card:        rgba(255,255,255,0.03);
+      --card-border: rgba(0,210,255,0.12);
+      --text:        #e2e8f0;
+      --muted:       #94a3b8;
+      --accent:      #00d2ff;
+      --accent2:     #7c3aed;
+      --nav-bg:      rgba(7,7,15,0.82);
+      --radius:      14px;
+    }
+    body.light {
+      --bg:          #f0f4f8;
+      --bg2:         #ffffff;
+      --card:        rgba(255,255,255,0.75);
+      --card-border: rgba(0,150,200,0.2);
+      --text:        #1e293b;
+      --muted:       #64748b;
+      --accent:      #0284c7;
+      --accent2:     #7c3aed;
+      --nav-bg:      rgba(240,244,248,0.88);
+    }
+
+    /* ââ RESET ââââââââââââââââââââââââââââââââââââââ */
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; font-size:16px; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      transition: background .35s, color .35s;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+    a { text-decoration:none; color:inherit; }
+    img { display:block; max-width:100%; }
+    button { font-family: inherit; }
+
+    /* ââ NAV ââââââââââââââââââââââââââââââââââââââââ */
+    nav {
+      position: fixed; top:0; left:0; right:0; z-index:900;
+      height: 62px;
+      display: flex; align-items:center; justify-content:space-between;
+      padding: 0 2.5rem;
+      background: var(--nav-bg);
+      backdrop-filter: blur(24px) saturate(1.4);
+      border-bottom: 1px solid var(--card-border);
+    }
+    .logo {
+      font-size:1.1rem; font-weight:800; letter-spacing:-0.5px;
+      color: var(--accent);
+    }
+    .logo span { color: var(--text); }
+    .nav-right {
+      display: flex; align-items:center; gap:2rem;
+    }
+    .nav-links {
+      display: flex; gap:1.8rem; list-style:none;
+    }
+    .nav-links a {
+      font-size:.875rem; font-weight:500; color:var(--muted);
+      transition:color .2s;
+    }
+    .nav-links a:hover { color:var(--accent); }
+    .theme-btn {
+      background:none; border:none; cursor:pointer;
+      font-size:1.15rem; color:var(--muted);
+      transition:color .2s; line-height:1;
+      padding: 4px;
+    }
+    .theme-btn:hover { color:var(--accent); }
+    .hamburger {
+      display:none; flex-direction:column; gap:5px;
+      background:none; border:none; cursor:pointer; padding:4px;
+    }
+    .hamburger span {
+      display:block; width:22px; height:2px;
+      background:var(--text); border-radius:2px; transition:.3s;
+    }
+    .mobile-nav {
+      display:none; flex-direction:column;
+      position:fixed; top:62px; left:0; right:0; z-index:899;
+      background:var(--nav-bg); backdrop-filter:blur(24px);
+      border-bottom:1px solid var(--card-border);
+      padding:1.5rem 2.5rem; gap:1.2rem;
+    }
+    .mobile-nav.open { display:flex; }
+    .mobile-nav a {
+      font-size:.95rem; font-weight:500; color:var(--muted);
+      transition:color .2s;
+    }
+    .mobile-nav a:hover { color:var(--accent); }
+
+    /* ââ HERO âââââââââââââââââââââââââââââââââââââââ */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items:center; justify-content:center;
+      position: relative; overflow:hidden;
+      padding: 7rem 2rem 5rem;
+    }
+    /* Grid bg */
+    .hero::before {
+      content:'';
+      position:absolute; inset:0; pointer-events:none;
+      background-image:
+        linear-gradient(rgba(0,210,255,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,210,255,.04) 1px, transparent 1px);
+      background-size: 52px 52px;
+    }
+    /* Glow blobs */
+    .hero::after {
+      content:'';
+      position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 60% 50% at 15% 55%, rgba(0,210,255,.09) 0%, transparent 70%),
+        radial-gradient(ellipse 55% 45% at 85% 20%, rgba(124,58,237,.09) 0%, transparent 70%);
+    }
+    .hero-inner {
+      position:relative; z-index:1;
+      display:flex; flex-direction:column; align-items:center;
+      text-align:center; max-width:820px; width:100%;
+    }
+    /* Clearance pill */
+    .hero-pill {
+      display:inline-flex; align-items:center; gap:.55rem;
+      padding:.38rem 1.1rem;
+      border-radius:100px;
+      background:rgba(0,210,255,.08);
+      border:1px solid rgba(0,210,255,.28);
+      font-size:.78rem; font-weight:600; color:var(--accent);
+      letter-spacing:.3px;
+      margin-bottom:1.8rem;
+    }
+    .hero-pill .dot {
+      width:7px; height:7px; border-radius:50%;
+      background:var(--accent);
+      animation: dot-pulse 2s ease-in-out infinite;
+    }
+    @keyframes dot-pulse {
+      0%,100%{opacity:1;transform:scale(1);}
+      50%{opacity:.35;transform:scale(.8);}
+    }
+    .hero h1 {
+      font-size: clamp(2.6rem, 7vw, 5rem);
+      font-weight:900; letter-spacing:-2.5px; line-height:1.05;
+      margin-bottom:.9rem;
+    }
+    .hero h1 .hi { color:var(--muted); font-weight:400; font-size:.48em; letter-spacing:0; display:block; margin-bottom:.3rem; }
+    .hero h1 .accent { color:var(--accent); }
+    .hero-sub {
+      font-size:1.1rem; color:var(--muted); margin-bottom:.5rem;
+    }
+    /* Typewriter line */
+    .typewriter-wrap {
+      font-family:'Courier New', Courier, monospace;
+      font-size:.95rem; color:var(--accent);
+      margin-bottom:2.2rem; min-height:1.6em;
+    }
+    .cursor { animation:blink 1s step-end infinite; }
+    @keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
+
+    .hero-cta {
+      display:flex; gap:1rem; flex-wrap:wrap; justify-content:center;
+      margin-bottom:2.5rem;
+    }
+    .btn {
+      display:inline-flex; align-items:center; gap:.5rem;
+      padding:.7rem 1.6rem; border-radius:9px;
+      font-size:.875rem; font-weight:600;
+      cursor:pointer; border:none; transition:all .2s;
+    }
+    .btn-primary {
+      background:var(--accent); color:#000;
+    }
+    .btn-primary:hover { filter:brightness(1.1); transform:translateY(-2px); box-shadow:0 8px 28px rgba(0,210,255,.3); }
+    .btn-ghost {
+      background:transparent;
+      border:1px solid var(--card-border);
+      color:var(--text);
+    }
+    .btn-ghost:hover { border-color:var(--accent); color:var(--accent); transform:translateY(-2px); }
+
+    .hero-socials { display:flex; gap:.9rem; }
+    .s-link {
+      width:40px; height:40px; border-radius:10px;
+      background:var(--card); border:1px solid var(--card-border);
+      display:flex; align-items:center; justify-content:center;
+      color:var(--muted); transition:all .2s;
+    }
+    .s-link:hover { border-color:var(--accent); color:var(--accent); transform:translateY(-3px); }
+
+    /* Scroll indicator */
+    .scroll-cue {
+      position:absolute; bottom:2rem; left:50%; transform:translateX(-50%);
+      display:flex; flex-direction:column; align-items:center; gap:6px;
+      color:var(--muted); font-size:.72rem; letter-spacing:1px; text-transform:uppercase;
+    }
+    .scroll-cue .bar {
+      width:1px; height:44px;
+      background:linear-gradient(var(--accent), transparent);
+      animation:bar-grow 2s ease-in-out infinite;
+    }
+    @keyframes bar-grow{
+      0%{opacity:0;transform:scaleY(0);transform-origin:top;}
+      50%{opacity:1;transform:scaleY(1);}
+      100%{opacity:0;transform:scaleY(1);transform-origin:bottom;}
+    }
+
+    /* ââ SECTION SHELL ââââââââââââââââââââââââââââââ */
+    .section {
+      padding: 6rem 2rem;
+      max-width:1120px; margin:0 auto;
+    }
+    .section-eyebrow {
+      font-size:.72rem; font-weight:700;
+      letter-spacing:3.5px; text-transform:uppercase;
+      color:var(--accent); margin-bottom:.5rem;
+    }
+    .section-heading {
+      font-size: clamp(1.75rem, 4vw, 2.6rem);
+      font-weight:800; letter-spacing:-1px;
+      margin-bottom:2.8rem;
+    }
+
+    /* ââ ABOUT ââââââââââââââââââââââââââââââââââââââ */
+    .about-layout {
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      grid-template-rows:auto auto;
+      gap:1.4rem;
+    }
+    .card {
+      background:var(--card);
+      border:1px solid var(--card-border);
+      border-radius:var(--radius);
+      padding:1.9rem;
+      transition:border-color .3s, transform .3s, box-shadow .3s;
+    }
+    .card:hover {
+      border-color:var(--accent);
+      transform:translateY(-5px);
+      box-shadow:0 12px 40px rgba(0,210,255,.07);
+    }
+    .card-icon { font-size:1.9rem; margin-bottom:1rem; }
+    .card h3 { font-size:1rem; font-weight:700; margin-bottom:1.3rem; }
+
+    .exp-item { padding-bottom:1.2rem; margin-bottom:1.2rem; border-bottom:1px solid var(--card-border); }
+    .exp-item:last-child { border-bottom:none; padding-bottom:0; margin-bottom:0; }
+    .exp-role { font-size:.93rem; font-weight:700; }
+    .exp-org { font-size:.82rem; color:var(--accent); margin:.2rem 0; }
+    .exp-date { font-size:.74rem; color:var(--muted); }
+
+    .tag-row { display:flex; flex-wrap:wrap; gap:.45rem; margin-top:.9rem; }
+    .tag {
+      padding:.28rem .75rem; border-radius:100px;
+      font-size:.73rem; font-weight:600;
+      background:rgba(0,210,255,.09);
+      color:var(--accent);
+      border:1px solid rgba(0,210,255,.22);
+    }
+
+    .bio-card {
+      grid-column:1 / -1;
+    }
+    .bio-card p {
+      font-size:.92rem; color:var(--muted); line-height:1.85;
+      margin-bottom:.9rem;
+    }
+    .bio-card p:last-child { margin-bottom:0; }
+    .bio-card strong { color:var(--text); }
+
+    /* Clearance callout */
+    .clearance-strip {
+      display:flex; align-items:center; gap:1.4rem;
+      background:linear-gradient(135deg, rgba(0,210,255,.07), rgba(124,58,237,.07));
+      border:1px solid var(--card-border);
+      border-radius:var(--radius);
+      padding:1.6rem 2rem;
+      margin-bottom:1.4rem;
+    }
+    .clearance-strip .icon { font-size:2.4rem; flex-shrink:0; }
+    .clearance-strip h3 { font-size:.95rem; font-weight:700; margin-bottom:.2rem; }
+    .clearance-strip p { font-size:.83rem; color:var(--muted); }
+
+    /* ââ PROJECTS âââââââââââââââââââââââââââââââââââ */
+    .projects-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fill, minmax(310px, 1fr));
+      gap:1.4rem;
+    }
+    .proj-card {
+      background:var(--card);
+      border:1px solid var(--card-border);
+      border-radius:var(--radius);
+      padding:1.8rem;
+      position:relative; overflow:hidden;
+      transition:all .3s;
+    }
+    .proj-card::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:linear-gradient(140deg, rgba(0,210,255,.06), transparent 60%);
+      opacity:0; transition:opacity .3s;
+    }
+    .proj-card:hover { border-color:var(--accent); transform:translateY(-6px); box-shadow:0 16px 48px rgba(0,210,255,.08); }
+    .proj-card:hover::before { opacity:1; }
+    .proj-top { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:.9rem; }
+    .proj-icon { font-size:1.7rem; }
+    .proj-links { display:flex; gap:.45rem; }
+    .proj-link {
+      width:32px; height:32px; border-radius:8px;
+      border:1px solid var(--card-border);
+      display:flex; align-items:center; justify-content:center;
+      color:var(--muted); transition:all .2s;
+    }
+    .proj-link:hover { border-color:var(--accent); color:var(--accent); }
+    .proj-card h3 { font-size:.97rem; font-weight:700; margin-bottom:.55rem; }
+    .proj-card p { font-size:.84rem; color:var(--muted); line-height:1.75; margin-bottom:1.1rem; }
+    .stack { display:flex; flex-wrap:wrap; gap:.38rem; }
+    .chip {
+      padding:.22rem .6rem; border-radius:6px;
+      font-size:.7rem; font-weight:700;
+      background:rgba(124,58,237,.13); color:#a78bfa;
+      border:1px solid rgba(124,58,237,.22);
+    }
+
+    /* ââ SKILLS âââââââââââââââââââââââââââââââââââââ */
+    .skills-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fill, minmax(220px, 1fr));
+      gap:1.1rem;
+    }
+    .skill-box {
+      background:var(--card); border:1px solid var(--card-border);
+      border-radius:var(--radius); padding:1.4rem;
+      transition:border-color .25s;
+    }
+    .skill-box:hover { border-color:var(--accent); }
+    .skill-box h4 {
+      font-size:.74rem; font-weight:700;
+      text-transform:uppercase; letter-spacing:1.5px;
+      color:var(--accent); margin-bottom:.85rem;
+    }
+    .skill-pills { display:flex; flex-wrap:wrap; gap:.4rem; }
+    .pill {
+      padding:.25rem .65rem; border-radius:6px;
+      font-size:.76rem;
+      background:rgba(255,255,255,.05); color:var(--muted);
+      border:1px solid var(--card-border);
+    }
+    body.light .pill { background:rgba(0,0,0,.05); }
+
+    /* ââ CONTACT ââââââââââââââââââââââââââââââââââââ */
+    .contact-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fill, minmax(250px, 1fr));
+      gap:1.1rem;
+    }
+    .c-card {
+      display:flex; align-items:center; gap:1rem;
+      background:var(--card); border:1px solid var(--card-border);
+      border-radius:var(--radius); padding:1.5rem;
+      transition:all .25s; color:var(--text);
+    }
+    .c-card:hover { border-color:var(--accent); transform:translateY(-4px); box-shadow:0 10px 32px rgba(0,210,255,.07); }
+    .c-icon {
+      width:48px; height:48px; flex-shrink:0; border-radius:11px;
+      background:rgba(0,210,255,.1);
+      display:flex; align-items:center; justify-content:center; font-size:1.5rem;
+    }
+    .c-label { font-size:.74rem; color:var(--muted); margin-bottom:.2rem; }
+    .c-value { font-size:.88rem; font-weight:600; }
+
+    /* ââ FOOTER âââââââââââââââââââââââââââââââââââââ */
+    footer {
+      text-align:center; padding:2rem;
+      border-top:1px solid var(--card-border);
+      color:var(--muted); font-size:.8rem;
+    }
+
+    /* ââ ANIMATIONS âââââââââââââââââââââââââââââââââ */
+    .reveal {
+      opacity:0; transform:translateY(28px);
+      transition:opacity .65s ease, transform .65s ease;
+    }
+    .reveal.in { opacity:1; transform:translateY(0); }
+
+    /* ââ RESPONSIVE âââââââââââââââââââââââââââââââââ */
+    @media(max-width:780px){
+      nav { padding:0 1.4rem; }
+      .nav-links { display:none; }
+      .hamburger { display:flex; }
+      .about-layout { grid-template-columns:1fr; }
+      .bio-card { grid-column:auto; }
+      .section { padding:4rem 1.4rem; }
+      .hero { padding:6rem 1.4rem 4rem; }
+      .clearance-strip { flex-direction:column; text-align:center; }
+    }
+    @media(max-width:500px){
+      .hero h1 { letter-spacing:-1.5px; }
+    }
+
+    /* ââ PROFILE PHOTO ââââââââââââââââââââââââââââââââ */
+    .hero-photo-wrap {
+      position: relative;
+      margin-bottom: 1.6rem;
+    }
+    .hero-photo {
+      width: 150px; height: 150px;
+      border-radius: 50%;
+      object-fit: cover; object-position: center top;
+      border: 3px solid var(--accent);
+      box-shadow: 0 0 0 6px rgba(0,210,255,0.12), 0 16px 48px rgba(0,0,0,0.4);
+    }
+    .hero-photo-badge {
+      position: absolute; bottom: 4px; right: 4px;
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--accent); color: #000;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .85rem; font-weight: 700;
+      border: 2px solid var(--bg);
+    }
+    /* About photo */
+    .about-photo-wrap {
+      display: flex; justify-content: center; margin-bottom: 1.5rem;
+    }
+    .about-photo {
+      width: 120px; height: 120px;
+      border-radius: 16px;
+      object-fit: cover; object-position: center top;
+      border: 2px solid var(--card-border);
+    }
+  </style>
+</head>
+<body>
+
+<!-- âââ NAV âââââââââââââââââââââââââââââââââââââââ -->
+<nav>
+  <a href="#" class="logo">S<span>Ahmed</span></a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="theme-btn" id="themeBtn" title="Toggle theme">ð</button>
+  </div>
+  <button class="hamburger" id="hamburger" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile nav -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="#about" onclick="closeMobile()">About</a>
+  <a href="#projects" onclick="closeMobile()">Projects</a>
+  <a href="#skills" onclick="closeMobile()">Skills</a>
+  <a href="#contact" onclick="closeMobile()">Contact</a>
+</div>
+
+<!-- âââ HERO âââââââââââââââââââââââââââââââââââââââ -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-photo-wrap">
+      <img src="profile.jpg" alt="Salman Ahmed" class="hero-photo" />
+      <div class="hero-photo-badge">â</div>
+    </div>
+    <div class="hero-pill">
+      <span class="dot"></span>
+      ð Security Clearance: Level II (Secret)
+    </div>
+
+    <h1>
+      <span class="hi">Hey, I'm</span>
+      Salman <span class="accent">Ahmed</span>
+    </h1>
+
+    <p class="hero-sub">Computer Science @ Carleton University â Cybersecurity Stream</p>
+
+    <div class="typewriter-wrap" aria-hidden="true">
+      <span id="typed"></span><span class="cursor">|</span>
+    </div>
+
+    <div class="hero-cta">
+      <a href="Resume_Salman_Ahmed_20.pdf" download class="btn btn-primary">ð Resume / CV</a>
+      <a href="mailto:salmanahmed620@hotmail.com" class="btn btn-ghost">ð¬ Contact Info</a>
+    </div>
+
+    <div class="hero-socials">
+      <!-- LinkedIn -->
+      <a href="https://linkedin.com/in/salmanahmed18" target="_blank" rel="noopener" class="s-link" title="LinkedIn">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+          <rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
+        </svg>
+      </a>
+      <!-- GitHub -->
+      <a href="https://github.com/sahme24" target="_blank" rel="noopener" class="s-link" title="GitHub">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/>
+        </svg>
+      </a>
+      <!-- Email -->
+      <a href="mailto:salmanahmed620@hotmail.com" class="s-link" title="Email">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="4" width="20" height="16" rx="2"/>
+          <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+
+  <div class="scroll-cue">
+    <div class="bar"></div>
+  </div>
+</section>
+
+<!-- âââ ABOUT âââââââââââââââââââââââââââââââââââââââ -->
+<div class="section" id="about">
+  <p class="section-eyebrow reveal">so, who am I?</p>
+  <h2 class="section-heading reveal">About Me</h2>
+
+  <div class="clearance-strip reveal">
+    <div class="icon">ð¡ï¸</div>
+    <div>
+      <h3>Active Secret Security Clearance â Level II</h3>
+      <p>Granted through my co-op at the Department of National Defence. Eligible for roles requiring classified access.</p>
+    </div>
+  </div>
+
+  <div class="about-layout">
+    <!-- Experience -->
+    <div class="card reveal">
+      <div class="card-icon">ð¼</div>
+      <h3>Work Experience</h3>
+      <div class="exp-item">
+        <div class="exp-role">Virtualization &amp; Infrastructure Engineering Co-op</div>
+        <div class="exp-org">Department of National Defence (DGITI)</div>
+        <div class="exp-date">April 2026 â Present &nbsp;Â·&nbsp; Ottawa, ON</div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-role">Security Operations</div>
+        <div class="exp-org">Commissionaires, Parliament Hill Centre Block</div>
+        <div class="exp-date">Jul 2024 â Present &nbsp;Â·&nbsp; Ottawa, ON</div>
+      </div>
+    </div>
+
+    <!-- Education -->
+    <div class="card reveal">
+      <div class="card-icon">ð</div>
+      <h3>Education</h3>
+      <div class="exp-item">
+        <div class="exp-role">Bachelor of Computer Science (Honours)</div>
+        <div class="exp-org">Carleton University</div>
+        <div class="exp-date">Expected May 2028 &nbsp;Â·&nbsp; Ottawa, ON</div>
+      </div>
+      <div class="tag-row">
+        <span class="tag">Cybersecurity Stream</span>
+        <span class="tag">Co-op</span>
+        <span class="tag">Minor in Math</span>
+      </div>
+    </div>
+
+    <!-- Bio -->
+    <div class="card bio-card reveal">
+      <div class="about-photo-wrap">
+        <img src="profile.jpg" alt="Salman Ahmed" class="about-photo" />
+      </div>
+      <p>Third-year Computer Science student at Carleton specializing in cybersecurity, currently doing a co-op at the <strong>Department of National Defence</strong> working on enterprise virtualization across VMware ESXi, vCenter, and Horizon environments â with an active <strong>Level II Secret clearance</strong>.</p>
+      <p>I've built cloud security scanners, network monitoring labs, and vulnerability assessment environments from the ground up. I like understanding how systems break as much as how they're built. Whether it's a misconfigured IAM policy or a suspicious SMTP packet, I find the puzzle worth solving.</p>
+      <p>Bilingual in English and French, fluent in Arabic. Outside of tech: gym, gaming, and catching up with family when I can. Always have a project running on the side â let's connect if something caught your eye.</p>
+    </div>
+  </div>
+</div>
+
+<!-- âââ PROJECTS âââââââââââââââââââââââââââââââââââââ -->
+<div class="section" id="projects">
+  <p class="section-eyebrow reveal">what I've built</p>
+  <h2 class="section-heading reveal">Projects</h2>
+
+  <div class="projects-grid">
+
+    <!-- Project 1 -->
+    <div class="proj-card reveal">
+      <div class="proj-top">
+        <div class="proj-icon">âï¸</div>
+        <div class="proj-links">
+          <a href="https://github.com/sahme24/cloud-security-scanner" title="GitHub">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+      <h3>Cloud Security Misconfiguration Scanner</h3>
+      <p>Python-based CLI tool that audits AWS environments for IAM misconfigurations, exposed S3 buckets, and overly permissive security groups â flagging risks and suggesting remediation steps.</p>
+      <div class="stack">
+        <span class="chip">Python</span>
+        <span class="chip">AWS</span>
+        <span class="chip">IAM</span>
+        <span class="chip">S3</span>
+      </div>
+    </div>
+
+    <!-- Project 2 -->
+    <div class="proj-card reveal">
+      <div class="proj-top">
+        <div class="proj-icon">ð¡</div>
+        <div class="proj-links">
+          <a href="https://github.com/sahme24/network-traffic-analytics" title="GitHub">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+      <h3>Network Traffic Analytics Lab</h3>
+      <p>Simulated a networked environment, captured traffic in Wireshark, and wrote Python scripts to detect brute-force attempts and suspicious SMTP patterns. Ingested into Splunk for a live anomaly dashboard.</p>
+      <div class="stack">
+        <span class="chip">VirtualBox</span>
+        <span class="chip">Wireshark</span>
+        <span class="chip">Python</span>
+        <span class="chip">Splunk</span>
+      </div>
+    </div>
+
+    <!-- Project 3 -->
+    <div class="proj-card reveal">
+      <div class="proj-top">
+        <div class="proj-icon">ð¡ï¸</div>
+        <div class="proj-links">
+          <a href="https://github.com/sahme24/vuln-assessment-lab" title="GitHub">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+      <h3>Vulnerability Assessment Lab</h3>
+      <p>Spun up intentionally vulnerable Linux VMs, ran Nessus and OpenVAS scans to surface critical issues (including remote root access), then hardened them â driving vulnerability scores from critical down to low.</p>
+      <div class="stack">
+        <span class="chip">VirtualBox</span>
+        <span class="chip">Nessus</span>
+        <span class="chip">OpenVAS</span>
+        <span class="chip">Linux</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- âââ SKILLS âââââââââââââââââââââââââââââââââââââââ -->
+<div class="section" id="skills">
+  <p class="section-eyebrow reveal">what I work with</p>
+  <h2 class="section-heading reveal">Technical Skills</h2>
+
+  <div class="skills-grid reveal">
+    <div class="skill-box">
+      <h4>ð¥ï¸ Languages</h4>
+      <div class="skill-pills">
+        <span class="pill">Python</span>
+        <span class="pill">SQL</span>
+        <span class="pill">Java</span>
+        <span class="pill">C++</span>
+        <span class="pill">JavaScript</span>
+      </div>
+    </div>
+    <div class="skill-box">
+      <h4>âï¸ Infrastructure</h4>
+      <div class="skill-pills">
+        <span class="pill">VMware ESXi</span>
+        <span class="pill">vCenter</span>
+        <span class="pill">Horizon</span>
+        <span class="pill">VirtualBox</span>
+      </div>
+    </div>
+    <div class="skill-box">
+      <h4>ð Security Tools</h4>
+      <div class="skill-pills">
+        <span class="pill">Wireshark</span>
+        <span class="pill">Nessus</span>
+        <span class="pill">Splunk</span>
+        <span class="pill">Kali Linux</span>
+        <span class="pill">OpenVAS</span>
+      </div>
+    </div>
+    <div class="skill-box">
+      <h4>ð Languages</h4>
+      <div class="skill-pills">
+        <span class="pill">English</span>
+        <span class="pill">French (Bilingual)</span>
+  2     <span class="pill">Arabic (Fluent)</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- âââ CONTACT ââââââââââââââââââââââââââââââââââââââ -->
+<div class="section" id="contact">
+  <p class="section-eyebrow reveal">be sure to reach out</p>
+  <h2 class="section-heading reveal">Contact Me</h2>
+
+  <div class="contact-grid reveal">
+    <a href="mailto:salmanahmed620@hotmail.com" class="c-card">
+      <div class="c-icon">ð§</div>
+      <div>
+        <div class="c-label">Email</div>
+        <div class="c-value">salmanahmed620@hotmail.com</div>
+      </div>
+    </a>
+    <a href="https://linkedin.com/in/salmanahmed18" target="_blank" rel="noopener" class="c-card">
+      <div class="c-icon">ð¼</div>
+      <div>
+        <div class="c-label">LinkedIn</div>
+        <div class="c-value">linkedin.com/in/salmanahmed18</div>
+      </div>
+    </a>
+    <a href="tel:6139789476" class="c-card">
+      <div class="c-icon">ð</div>
+      <div>
+        <div class="c-label">Phone</div>
+        <div class="c-value">613-978-9476</div>
+      </div>
+    </a>
+  </div>
+</div>
+
+<!-- âââ FOOTER âââââââââââââââââââââââââââââââââââââââ -->
+<footer>
+  <p>Copyright &copy; 2026 Salman Ahmed &nbsp;Â·&nbsp; All Rights Reserved</p>
+</footer>
+
+<!-- âââ SCRIPTS ââââââââââââââââââââââââââââââââââââââ -->
+<script>
+  /* --- Theme toggle --- */
+  const themeBtn = document.getElementById('themeBtn');
+  let dark = true;
+  themeBtn.addEventListener('click', () => {
+    dark = !dark;
+    document.body.classList.toggle('light', !dark);
+    themeBtn.textContent = dark ? 'ð' : 'âï¸';
+  });
+
+  /* --- Hamburger --- */
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobileNav');
+  hamburger.addEventListener('click', () => mobileNav.classList.toggle('open'));
+  function closeMobile() { mobileNav.classList.remove('open'); }
+
+  /* --- Typewriter --- */
+  const phrases = [
+    'Cybersecurity & Infrastructure Engineering',
+    'Cloud Security Â· AWS Â· VMware ESXi',
+    'DND Co-op Â· Secret Clearance Holder',
+    'Breaking things (ethically) since 2022 ð',
+  ];
+  let pIdx = 0, cIdx = 0, deleting = false;
+  const typedEl = document.getElementById('typed');
+
+  function tick() {
+    const phrase = phrases[pIdx];
+    if (!deleting) {
+      typedEl.textContent = phrase.slice(0, ++cIdx);
+      if (cIdx === phrase.length) {
+        deleting = true;
+        setTimeout(tick, 2200);
+        return;
+      }
+    } else {
+      typedEl.textContent = phrase.slice(0, --cIdx);
+      if (cIdx === 0) {
+        deleting = false;
+        pIdx = (pIdx + 1) % phrases.length;
+      }
+    }
+    setTimeout(tick, deleting ? 38 : 68);
+  }
+  tick();
+
+  /* --- Scroll reveal --- */
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('in'), i * 75);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  /* --- Active nav link highlight --- */
+  const sections = document.querySelectorAll('[id]');
+  const navAs = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 100) current = s.id;
+    });
+    navAs.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current
+        ? 'var(--accent)' : '';
+    });
+  }, { passive: true });
+</script>
+</body>
+</html>
