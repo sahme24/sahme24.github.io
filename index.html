@@ -6,290 +6,364 @@
   <title>Salman Ahmed | Cybersecurity &amp; Infrastructure</title>
   <meta name="description" content="Salman Ahmed &mdash; Cybersecurity student at Carleton University. Virtualization &amp; Infrastructure Co-op at DND. Level II Secret Clearance." />
   <style>
-    /* ââ TOKENS âââââââââââââââââââââââââââââââââââââ */
     :root {
-      --bg:          #07070f;
-      --bg2:         #0d0d1a;
-      --card:        rgba(255,255,255,0.03);
-      --card-border: rgba(0,210,255,0.12);
-      --text:        #e2e8f0;
-      --muted:       #94a3b8;
-      --accent:      #00d2ff;
-      --accent2:     #7c3aed;
-      --nav-bg:      rgba(7,7,15,0.82);
-      --radius:      14px;
+      --bg:#0a0c10; --bg2:#0f1117; --card:#141720; --card-border:#1e2230;
+      --text:#e2e8f0; --muted:#7c8a9e; --accent:#00ff9d; --accent2:#0ea5e9;
+      --radius:12px; --font:'Inter',system-ui,sans-serif;
     }
-    body.light {
-      --bg:          #f0f4f8;
-      --bg2:         #ffffff;
-      --card:        rgba(255,255,255,0.75);
-      --card-border: rgba(0,150,200,0.2);
-      --text:        #1e293b;
-      --muted:       #64748b;
-      --accent:      #0284c7;
-      --accent2:     #7c3aed;
-      --nav-bg:      rgba(240,244,248,0.88);
+    .light {
+      --bg:#f0f4f8; --bg2:#e2e8f0; --card:#ffffff; --card-border:#cbd5e1;
+      --text:#0f172a; --muted:#475569; --accent:#059669; --accent2:#0284c7;
     }
-
-    /* ââ RESET ââââââââââââââââââââââââââââââââââââââ */
-    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-    html { scroll-behavior:smooth; font-size:16px; }
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      transition: background .35s, color .35s;
-      overflow-x: hidden;
-      line-height: 1.6;
-    }
-    a { text-decoration:none; color:inherit; }
-    img { display:block; max-width:100%; }
-    button { font-family: inherit; }
-
-    /* ââ NAV ââââââââââââââââââââââââââââââââââââââââ */
-    nav {
-      position: fixed; top:0; left:0; right:0; z-index:900;
-      height: 62px;
-      display: flex; align-items:center; justify-content:space-between;
-      padding: 0 2.5rem;
-      background: var(--nav-bg);
-      backdrop-filter: blur(24px) saturate(1.4);
-      border-bottom: 1px solid var(--card-border);
-    }
-    .logo { font-size:1.1rem; font-weight:800; letter-spacing:-0.5px; color: var(--accent); }
-    .logo span { color: var(--text); }
-    .nav-right { display: flex; align-items:center; gap:2rem; }
-    .nav-links { display: flex; gap:1.8rem; list-style:none; }
-    .nav-links a { font-size:.875rem; font-weight:500; color:var(--muted); transition:color .2s; }
-    .nav-links a:hover { color:var(--accent); }
-    .theme-btn {
-      background:none; border:none; cursor:pointer;
-      font-size:1.15rem; color:var(--muted);
-      transition:color .2s; line-height:1; padding: 4px;
-      display:flex; align-items:center;
-    }
-    .theme-btn:hover { color:var(--accent); }
-    .hamburger { display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:4px; }
-    .hamburger span { display:block; width:22px; height:2px; background:var(--text); border-radius:2px; transition:.3s; }
-    .mobile-nav {
-      display:none; flex-direction:column;
-      position:fixed; top:62px; left:0; right:0; z-index:899;
-      background:var(--nav-bg); backdrop-filter:blur(24px);
-      border-bottom:1px solid var(--card-border);
-      padding:1.5rem 2.5rem; gap:1.2rem;
-    }
-    .mobile-nav.open { display:flex; }
-    .mobile-nav a { font-size:.95rem; font-weight:500; color:var(--muted); transition:color .2s; }
-    .mobile-nav a:hover { color:var(--accent); }
-
-    /* ââ HERO âââââââââââââââââââââââââââââââââââââââ */
-    .hero {
-      min-height: 100vh;
-      display: flex; align-items:center; justify-content:center;
-      position: relative; overflow:hidden;
-      padding: 7rem 2rem 5rem;
-    }
-    .hero::before {
-      content:''; position:absolute; inset:0; pointer-events:none;
-      background-image:
-        linear-gradient(rgba(0,210,255,.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,210,255,.04) 1px, transparent 1px);
-      background-size: 52px 52px;
-    }
-    .hero::after {
-      content:''; position:absolute; inset:0; pointer-events:none;
-      background:
-        radial-gradient(ellipse 60% 50% at 15% 55%, rgba(0,210,255,.09) 0%, transparent 70%),
-        radial-gradient(ellipse 55% 45% at 85% 20%, rgba(124,58,237,.09) 0%, transparent 70%);
-    }
-    .hero-inner {
-      position:relative; z-index:1;
-      display:flex; flex-direction:column; align-items:center;
-      text-align:center; max-width:820px; width:100%;
-    }
-    .hero-pill {
-      display:inline-flex; align-items:center; gap:.55rem;
-      padding:.38rem 1.1rem; border-radius:100px;
-      background:rgba(0,210,255,.08); border:1px solid rgba(0,210,255,.28);
-      font-size:.78rem; font-weight:600; color:var(--accent);
-      letter-spacing:.3px; margin-bottom:1.8rem;
-    }
-    .hero-pill .dot {
-      width:7px; height:7px; border-radius:50%;
-      background:var(--accent); animation: dot-pulse 2s ease-in-out infinite;
-    }
-    @keyframes dot-pulse { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:.35;transform:scale(.8);} }
-    .hero h1 {
-      font-size: clamp(2.6rem, 7vw, 5rem);
-      font-weight:900; letter-spacing:-2.5px; line-height:1.05; margin-bottom:.9rem;
-    }
-    .hero h1 .hi { color:var(--muted); font-weight:400; font-size:.48em; letter-spacing:0; display:block; margin-bottom:.3rem; }
-    .hero h1 .accent { color:var(--accent); }
-    .hero-sub { font-size:1.1rem; color:var(--muted); margin-bottom:.5rem; }
-    .typewriter-wrap { font-family:'Courier New', Courier, monospace; font-size:.95rem; color:var(--accent); margin-bottom:2.2rem; min-height:1.6em; }
-    .cursor { animation:blink 1s step-end infinite; }
-    @keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
-    .hero-cta { display:flex; gap:1rem; flex-wrap:wrap; justify-content:center; margin-bottom:2.5rem; }
-    .btn {
-      display:inline-flex; align-items:center; gap:.5rem;
-      padding:.7rem 1.6rem; border-radius:9px;
-      font-size:.875rem; font-weight:600;
-      cursor:pointer; border:none; transition:all .2s;
-    }
-    .btn-primary { background:var(--accent); color:#000; }
-    .btn-primary:hover { filter:brightness(1.1); transform:translateY(-2px); box-shadow:0 8px 28px rgba(0,210,255,.3); }
-    .btn-ghost { background:transparent; border:1px solid var(--card-border); color:var(--text); }
-    .btn-ghost:hover { border-color:var(--accent); color:var(--accent); transform:translateY(-2px); }
-    .hero-socials { display:flex; gap:.9rem; }
-    .s-link {
-      width:40px; height:40px; border-radius:10px;
-      background:var(--card); border:1px solid var(--card-border);
-      display:flex; align-items:center; justify-content:center;
-      color:var(--muted); transition:all .2s;
-    }
-    .s-link:hover { border-color:var(--accent); color:var(--accent); transform:translateY(-3px); }
-    .scroll-cue {
-      position:absolute; bottom:2rem; left:50%; transform:translateX(-50%);
-      display:flex; flex-direction:column; align-items:center; gap:6px;
-      color:var(--muted); font-size:.72rem; letter-spacing:1px; text-transform:uppercase;
-    }
-    .scroll-cue .bar { width:1px; height:44px; background:linear-gradient(var(--accent), transparent); animation:bar-grow 2s ease-in-out infinite; }
-    @keyframes bar-grow{ 0%{opacity:0;transform:scaleY(0);transform-origin:top;} 50%{opacity:1;transform:scaleY(1);} 100%{opacity:0;transform:scaleY(1);transform-origin:bottom;} }
-
-    /* ââ SECTION SHELL ââââââââââââââââââââââââââââââ */
-    .section { padding: 6rem 2rem; max-width:1120px; margin:0 auto; }
-    .section-eyebrow { font-size:.72rem; font-weight:700; letter-spacing:3.5px; text-transform:uppercase; color:var(--accent); margin-bottom:.5rem; }
-    .section-heading { font-size: clamp(1.75rem, 4vw, 2.6rem); font-weight:800; letter-spacing:-1px; margin-bottom:2.8rem; }
-
-    /* ââ ABOUT ââââââââââââââââââââââââââââââââââââââ */
-    .about-layout { display:grid; grid-template-columns:1fr 1fr; grid-template-rows:auto auto; gap:1.4rem; }
-    .card { background:var(--card); border:1px solid var(--card-border); border-radius:var(--radius); padding:1.9rem; transition:border-color .3s, transform .3s, box-shadow .3s; }
-    .card:hover { border-color:var(--accent); transform:translateY(-5px); box-shadow:0 12px 40px rgba(0,210,255,.07); }
-    .card-icon { display:flex; align-items:center; margin-bottom:1rem; color:var(--accent); }
-    .card h3 { font-size:1rem; font-weight:700; margin-bottom:1.3rem; }
-    .exp-item { padding-bottom:1.2rem; margin-bottom:1.2rem; border-bottom:1px solid var(--card-border); }
-    .exp-item:last-child { border-bottom:none; padding-bottom:0; margin-bottom:0; }
-    .exp-role { font-size:.93rem; font-weight:700; }
-    .exp-org { font-size:.82rem; color:var(--accent); margin:.2rem 0; }
-    .exp-date { font-size:.74rem; color:var(--muted); }
-    .tag-row { display:flex; flex-wrap:wrap; gap:.45rem; margin-top:.9rem; }
-    .tag { padding:.28rem .75rem; border-radius:100px; font-size:.73rem; font-weight:600; background:rgba(0,210,255,.09); color:var(--accent); border:1px solid rgba(0,210,255,.22); }
-    .bio-card { grid-column:1 / -1; }
-    .bio-card p { font-size:.92rem; color:var(--muted); line-height:1.85; margin-bottom:.9rem; }
-    .bio-card p:last-child { margin-bottom:0; }
-    .bio-card strong { color:var(--text); }
-
-    .clearance-strip {
-      display:flex; align-items:center; gap:1.4rem;
-      background:linear-gradient(135deg, rgba(0,210,255,.07), rgba(124,58,237,.07));
-      border:1px solid var(--card-border); border-radius:var(--radius);
-      padding:1.6rem 2rem; margin-bottom:1.4rem;
-    }
-    .clearance-strip .icon { flex-shrink:0; color:var(--accent); }
-    .clearance-strip h3 { font-size:.95rem; font-weight:700; margin-bottom:.2rem; }
-    .clearance-strip p { font-size:.83rem; color:var(--muted); }
-
-    /* ââ PROJECTS âââââââââââââââââââââââââââââââââââ */
-    .projects-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(310px, 1fr)); gap:1.4rem; }
-    .proj-card {
-      background:var(--card); border:1px solid var(--card-border);
-      border-radius:var(--radius); padding:1.8rem;
-      position:relative; overflow:hidden; transition:all .3s;
-    }
-    .proj-card::before { content:''; position:absolute; inset:0; pointer-events:none; background:linear-gradient(140deg, rgba(0,210,255,.06), transparent 60%); opacity:0; transition:opacity .3s; }
-    .proj-card:hover { border-color:var(--accent); transform:translateY(-6px); box-shadow:0 16px 48px rgba(0,210,255,.08); }
-    .proj-card:hover::before { opacity:1; }
-    .proj-top { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:.9rem; }
-    .proj-icon { color:var(--accent); }
-    .proj-links { display:flex; gap:.45rem; }
-    .proj-link {
-      width:32px; height:32px; border-radius:8px;
-      border:1px solid var(--card-border);
-      display:flex; align-items:center; justify-content:center;
-      color:var(--muted); transition:all .2s;
-    }
-    .proj-link:hover { border-color:var(--accent); color:var(--accent); }
-    .proj-card h3 { font-size:.97rem; font-weight:700; margin-bottom:.55rem; }
-    .proj-card p { font-size:.84rem; color:var(--muted); line-height:1.75; margin-bottom:1.1rem; }
-    .stack { display:flex; flex-wrap:wrap; gap:.38rem; }
-    .chip { padding:.22rem .6rem; border-radius:6px; font-size:.trem; font-weight:700; background:rgba(124,58,237,.13); color:#a78bfa; border:1px solid rgba(124,58,237,.22); }
-
-    /* ââ SKILLS âââââââââââââââââââââââââââââââââââââ */
-    .skills-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:1.1rem; }
-    .skill-box { background:var(--card); border:1px solid var(--card-border); border-radius:var(--radius); padding:1.4rem; transition:border-color .25s; }
-    .skill-box:hover { border-color:var(--accent); }
-    .skill-box h4 { font-size:.74rem; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:var(--accent); margin-bottom:.85rem; display:flex; align-items:center; gap:.4rem; }
-    .skill-pills { display:flex; flex-wrap:wrap; gap:.4rem; }
-    .pill { padding:.25rem .65rem; border-radius:6px; font-size:.76rem; background:rgba(255,255,255,.05); color:var(--muted); border:1px solid var(--card-border); }
-    body.light .pill { background:rgba(0,0,0,.05); }
-
-    /* ââ CONTACT ââââââââââââââââââââââââââââââââââââ */
-    .contact-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(250px, 1fr)); gap:1.1rem; }
-    .c-card { display:flex; align-items:center; gap:1rem; background:var(--card); border:1px solid var(--card-border); border-radius:var(--radius); padding:1.5rem; transition:all .25s; color:var(--text); }
-    .c-card:hover { border-color:var(--accent); transform:translateY(-4px); box-shadow:0 10px 32px rgba(0,210,255,.07); }
-    .c-icon { width:48px; height:48px; flex-shrink:0; border-radius:11px; background:rgba(0,210,255,.1); display:flex; align-items:center; justify-content:center; color:var(--accent); }
-    .c-label { font-size:.74rem; color:var(--muted); margin-bottom:.2rem; }
-    .c-value { font-size:.88rem; font-weight:600; }
-
-    /* ââ QUIZ âââââââââââââââââââââââââââââââââââââââ */
-    .quiz-wrap {
-      max-width: 680px; margin: 0 auto;
-    }
-    .quiz-box {
-      background:var(--card); border:1px solid var(--card-border);
-      border-radius:var(--radius); padding:2rem; position:relative;
-    }
-    .quiz-header {
-      display:flex; align-items:center; justify-content:space-between;
-      margin-bottom:1.4rem;
-    }
-    .quiz-q-label {
-      display:flex; align-items:center; gap:.6rem;
-      font-size:.95rem; font-weight:700; color:var(--text);
-    }
-    .quiz-badges { display:flex; gap:.5rem; }
-    .badge-diff {
-      padding:.22rem .7rem; border-radius:100px;
-      font-size:.72rem; font-weight:700;
-    }
-    .badge-easy   { background:rgba(34,197,94,.15); color:#4ade80; border:1px solid rgba(34,197,94,.3); }
-    .badge-medium { background:rgba(251,191,36,.15); color:#fbbf24; border:1px solid rgba(251,191,36,.3); }
-    .badge-hard   { background:rgba(239,68,68,.15);  color:#f87171; border:1px solid rgba(239,68,68,.3); }
-    .badge-score  { padding:.22rem .7rem; border-radius:100px; font-size:.72rem; font-weight:700; background:rgba(0,210,255,.1); color:var(--accent); border:1px solid rgba(0,210,255,.25); }
-    .quiz-question { font-size:1rem; font-weight:600; color:var(--text); margin-bottom:1.2rem; line-height:1.5; }
-    .quiz-options { display:flex; flex-direction:column; gap:.6rem; margin-bottom:1.4rem; }
-    .quiz-opt {
-      display:flex; align-items:center; gap:.8rem;
-      background:rgba(255,255,255,.04); border:1px solid var(--card-border);
-      border-radius:10px; padding:.85rem 1rem; cursor:pointer;
-      transition:all .2s; font-size:.88rem; color:var(--text);
-      text-align:left; width:100%;
-    }
-    body.light .quiz-opt { background:rgba(0,0,0,.03); }
-    .quiz-opt:hover:not(:disabled) { border-color:var(--accent); background:rgba(0,210,255,.05); }
-    .quiz-opt.correct  { border-color:#4ade80; background:rgba(34,197,94,.1); color:#4ade80; }
-    .quiz-opt.wrong    { border-color:#f87171; background:rgba(239,68,68,.1);  color:#f87171; }
-    .quiz-opt.reveal   { border-color:#4ade80; background:rgba(34,197,94,.07); }
-    .quiz-opt:disabled { cursor:default; }
-    .opt-letter { width:24px; height:24px; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:.72rem; font-weight:700; background:rgba(255,255,255,.08); color:var(--muted); flex-shrink:0; }
-    .quiz-opt.correct .opt-letter  { background:rgba(34,197,94,.3); color:#4ade80; }
-    .quiz-opt.wrong   .opt-letter  { background:rgba(239,68,68,.3);  color:#f87171; }
-    .quiz-opt.reveal  .opt-letter  { background:rgba(34,197,94,.2);  color:#4ade80; }
-    .quiz-next {
-      width:100%; padding:.85rem; border:none; border-radius:10px;
-      background:var(--accent); color:#000; font-size:.9rem; font-weight:700;
-      cursor:pointer; transition:all .2s; opacity:.4; pointer-events:none;
-    }
-    .quiz-next.active { opacity:1; pointer-events:auto; }
-    .quiz-next:hover.active { filter:brightness(1.1); transform:translateY(-1px); }
-    .quiz-progress { height:3px; background:rgba(255,255,255,.08); border-radius:2px; margin-bottom:1.6rem; overflow:hidden; }
-    .quiz-progress-bar { height:100%; background:var(--accent); border-radius:2px; transition:width .4s ease; }
-    .quiz-result { text-align:center; padding:1rem 0; }
-    .quiz-result .score-big { font-size:3.5rem; font-weight:900; color:var(--accent); line-height:1; margin-bottom:.5rem; }
-    .quiz-result .score-sub { font-size:.9rem; color:var(--muted); margin-bottom:1.4rem; }
-    .quiz-result .result-msg { font-size:.95rem; color:var(--text); margin-bottom:1.6rem; line-height:1.6; }
-    .quiz-restart { padding:.75rem 2rem; border-radius:10px; background:var(--accent); color:#000; font-size:.88rem; font-weight:700; border:none; cursor:pointer; transition:all .2s; }
-    .quiz-restart:hover { filter:brightness(1.1); transform:translateY(-2px); }
-    .quiz-feedback { font-size:.8rem; color:var(--muted); margin-top:.6rem; min-height:1.2em; font-style:italic; }
-
-    /* ââ FOOTER ââ)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H¢ð¢fö÷FW"²FWBÖÆvã¦6VçFW#²FFæs£'&VÓ²&÷&FW"×F÷£6öÆBf"ÒÖ6&BÖ&÷&FW"²6öÆ÷#§f"ÒÖ×WFVB²föçB×6¦S¢ã&VÓ²Ð ¢ò¢)H)HäÔDôå2)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H¢ð¢ç&WfVÂ²÷6G£²G&ç6f÷&Ó§G&ç6ÆFU#²G&ç6Föã¦÷6GãcW2V6RÂG&ç6f÷&ÒãcW2V6S²Ð¢ç&WfVÂæâ²÷6G£²G&ç6f÷&Ó§G&ç6ÆFU²Ð ¢ò¢)H)H$U5ôå4dR)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H¢ð¢ÖVFÖ×vGF£s°¢æb²FFæs£ãG&VÓ²Ð¢ææbÖÆæ·2²F7Æ¦æöæS²Ð¢æÖ'W&vW"²F7Æ¦fÆW²Ð¢æ&÷WBÖÆ÷WB²w&B×FV×ÆFRÖ6öÇVÖç3£g#²Ð¢æ&òÖ6&B²w&BÖ6öÇVÖã¦WFó²Ð¢ç6V7Föâ²FFæs£G&VÒãG&VÓ²Ð¢æW&ò²FFæs£g&VÒãG&VÒG&VÓ²Ð¢æ6ÆV&æ6R×7G&²fÆWÖF&V7Föã¦6öÇVÖã²FWBÖÆvã¦6VçFW#²Ð¢Ð¢ÖVFÖ×vGF£S²æW&ò²ÆWGFW"×76æs¢ÓãW²ÒÐ ¢ò¢)H)H$ôdÄRõDò)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H)H¢ð¢æW&ò×÷Fò×w&²÷6Föã¢&VÆFfS²Ö&vâÖ&÷GFöÓ¢ãg&VÓ²Ð¢æW&ò×÷Fò²vGF¢S²VvC¢S²&÷&FW"×&FW3¢SS²ö&¦V7BÖfC¢6÷fW#²ö&¦V7B×÷6Föã¢6VçFW"F÷²&÷&FW#¢76öÆBf"ÒÖ66VçB²&÷×6F÷s¢g&v&Ã#Ã#SRÃã"ÂgC&v&ÃÃÃãB²Ð¢æW&ò×÷FòÖ&FvR²÷6Föã¢'6öÇWFS²&÷GFöÓ¢G²&vC¢G²vGF¢#²VvC¢#²&÷&FW"×&FW3¢SS²&6¶w&÷VæC¢f"ÒÖ66VçB²6öÆ÷#¢3²F7Æ¢fÆW²ÆvâÖFV×3¢6VçFW#²§W7FgÖ6öçFVçC¢6VçFW#²föçB×6¦S¢ãW&VÓ²föçB×vVvC¢s²&÷&FW#¢'6öÆBf"ÒÖ&r²Ð¢æ&÷WB×÷Fò×w&²F7Æ¢fÆW²§W7FgÖ6öçFVçC¢6VçFW#²Ö&vâÖ&÷GFöÓ¢ãW&VÓ²Ð¢æ&÷WB×÷Fò²vGF¢#²VvC¢#²&÷&FW"×&FW3¢g²ö&¦V7BÖfC¢6÷fW#²ö&¦V7B×÷6Föã¢6VçFW"F÷²&÷&FW#¢'6öÆBf"ÒÖ6&BÖ&÷&FW"²Ð¢Â÷7GÆSà£ÂöVCà£Æ&öGà £ÂÒÒäbÒÓà£Ææcà¢Æ&VcÒ"2"6Æ73Ò&Æövò#å3Ç7ãäÖVCÂ÷7ããÂöà¢ÆFb6Æ73Ò&æb×&vB#à¢ÇVÂ6Æ73Ò&æbÖÆæ·2#à¢ÆÆãÆ&VcÒ"6&÷WB#ä&÷WCÂöãÂöÆà¢ÆÆãÆ&VcÒ"7&ö¦V7G2#å&ö¦V7G3ÂöãÂöÆà¢ÆÆãÆ&VcÒ"76¶ÆÇ2#å6¶ÆÇ3ÂöãÂöÆà¢ÆÆãÆ&VcÒ"7V¢#åV£ÂöãÂöÆà¢ÆÆãÆ&VcÒ"66öçF7B#ä6öçF7CÂöãÂöÆà¢Â÷VÃà¢Æ'WGFöâ6Æ73Ò'FVÖRÖ'Fâ"CÒ'FVÖT'Fâ"FFÆSÒ%FövvÆRFVÖR#à¢Ç7frCÒ&6öäÖööâ"vGFÒ#"VvCÒ#"fWt&÷Ò##B#B"fÆÃÒ&æöæR"7G&ö¶SÒ&7W'&VçD6öÆ÷""7G&ö¶R×vGFÒ#""7G&ö¶RÖÆæV6Ò'&÷VæB"7G&ö¶RÖÆæV¦öãÒ'&÷VæB#ãÇFCÒ$Ó#"ãsã#2rr#"ãs¢"óãÂ÷7fsà¢Ç7frCÒ&6öå7Vâ"vGFÒ#"VvCÒ#"fWt&÷Ò##B#B"fÆÃÒ&æöæR"7G&ö¶SÒ&7W'&VçD6öÆ÷""7G&ö¶R×vGFÒ#""7G&ö¶RÖÆæV6Ò'&÷VæB"7G&ö¶RÖÆæV¦öãÒ'&÷VæB"7GÆSÒ&F7Æ¦æöæR#ãÆ6&6ÆR7Ò#""7Ò#""#Ò#R"óãÆÆæRÒ#""Ò#"#Ò#""#Ò#2"óãÆÆæRÒ#""Ò##"#Ò#""#Ò##2"óãÆÆæRÒ#Bã#""Ò#Bã#""#Ò#RãcB"#Ò#RãcB"óãÆÆæRÒ#ã3b"Ò#ã3b"#Ò#ãs"#Ò#ãs"óãÆÆæRÒ#"Ò#""#Ò#2"#Ò#""óãÆÆæRÒ##"Ò#""#Ò##2"#Ò#""óãÆÆæRÒ#Bã#""Ò#ãs"#Ò#RãcB"#Ò#ã3b"óãÆÆæRÒ#ã3b"Ò#RãcB"#Ò#ãs"#Ò#Bã#""óãÂ÷7fsà¢Âö'WGFöãà¢ÂöFcà¢Æ'WGFöâ6Æ73Ò&Ö'W&vW""CÒ&Ö'W&vW""&ÖÆ&VÃÒ$÷VâÖVçR#à¢Ç7ããÂ÷7ããÇ7ããÂ÷7ããÇ7ããÂ÷7ãà¢Âö'WGFöãà£Âöæcà £ÆFb6Æ73Ò&Öö&ÆRÖæb"CÒ&Öö&ÆTæb#à¢Æ&VcÒ"6&÷WB"öæ6Æ6³Ò&6Æ÷6TÖö&ÆR#ä&÷WCÂöà¢Æ&VcÒ"7&ö¦V7G2"öæ6Æ6³Ò&6Æ÷6TÖö&ÆR#å&ö¦V7G3Âöà¢Æ&VcÒ"76¶ÆÇ2"öæ6Æ6³Ò&6Æ÷6TÖö&ÆR#å6¶ÆÇ3Âöà¢Æ&VcÒ"7V¢"öæ6Æ6³Ò&6Æ÷6TÖö&ÆR#åV£Âöà¢Æ&VcÒ"66öçF7B"öæ6Æ6³Ò&6Æ÷6TÖö&ÆR#ä6öçF7CÂöà£ÂöFcà £ÂÒÒU$òÒÓà£Ç6V7Föâ6Æ73Ò&W&ò#à¢ÆFb6Æ73Ò&W&òÖææW"#à¢ÆFb6Æ73Ò&W&ò×÷Fò×w&#à¢ÆÖr7&3Ò'&öfÆRæ§r"ÇCÒ%6ÆÖâÖVB"6Æ73Ò&W&ò×÷Fò"óà¢ÆFb6Æ73Ò&W&ò×÷FòÖ&FvR#à¢Ç7frvGFÒ#2"VvCÒ#2"fWt&÷Ò##B#B"fÆÃÒ&æöæR"7G&ö¶SÒ&7W'&VçD6öÆ÷""7G&ö¶R×vGFÒ#2"7G&ö¶RÖÆæV6Ò'&÷VæB"7G&ö¶RÖÆæV¦öãÒ'&÷VæB#ãÇöÇÆæRöçG3Ò##brB""óãÂ÷7fsà¢ÂöFcà¢ÂöFcà ¢ÆFb6Æ73Ò&W&ò×ÆÂ#à¢Ç7â6Æ73Ò&F÷B#ãÂ÷7ãà¢Ç7frvGFÒ#2"VvCÒ#2"fWt&÷Ò##B#B"fÆÃÒ&æöæR"7G&ö¶SÒ&7W'&VçD6öÆ÷""7G&ö¶R×vGFÒ#"ãR"7G&ö¶RÖÆæV6Ò'&÷VæB"7G&ö¶RÖÆæV¦öãÒ'&÷VæB#ãÇ&V7BÒ#2"Ò#"vGFÒ#"VvCÒ#"'Ò#""'Ò#""óãÇFCÒ$ÓrcvRRcB"óãÂ÷7fsà¢6V7W&G6ÆV&æ6S¢ÆWfVÂ6V7&WB¢ÂöFcà ¢Æà¢Ç7â6Æ73Ò&#äWÂvÓÂ÷7ãà¢6ÆÖâÇ7â6Æ73Ò&66VçB#äÖVCÂ÷7ãà¢Âöà ¢Ç6Æ73Ò&W&ò×7V"#ä6ö×WFW"66Væ6R6&ÆWFöâVæfW'6GfÖF6²7&W'6V7W&G7G&VÓÂ÷à ¢ÆFb6Æ73Ò'GWw&FW"×w&"&ÖFFVãÒ'G'VR#à¢Ç7âCÒ'GVB#ãÂ÷7ããÇ7â6Æ73Ò&7W'6÷"#çÃÂ÷7ãà¢ÂöFcà ¢ÆFb6Æ73Ò&W&òÖ7F#à¢Æ&VcÒ%&W7VÖUõ6ÆÖåôÖVEó#çFb"F÷væÆöB6Æ73Ò&'Fâ'Fâ×&Ö'#à¢Ç7frvGFÒ#R"VvCÒ#R"fWt&÷Ò##B#B"fÆÃÒ&æöæR"7G&ö¶SÒ&7W'&VçD6öÆ÷""7G&ö¶R×vGFÒ#"ãR"7G&ö¶RÖÆæV6Ò'&÷VæB"7G&ö¶RÖÆæV¦öãÒ'&÷VæB#ãÇFCÒ$Ó#WcF""Ó"$V""Ó"Ó'bÓB"óãÇöÇÆæRöçG3Ò#r"Rr"óãÆÆæRÒ#""Ò#R"#Ò#""#Ò#2"óãÂ÷7fsà¢&W7VÖRò5`¢Âöà¢Æ&VcÒ&ÖÇFó§6ÆÖæÖVCc#÷FÖÂæ6öÒ"6Æ73Ò&'Fâ'FâÖv÷7B#à¢Ç7frvGFÒ#R"VvCÒ#R"fWt&÷Ò##B#B"fÆÃÒ&æöæR"7G&ö¶SÒ&7W'&VçD6öÆ÷""7G&ö¶R×vGFÒ#""7G&ö¶RÖÆæV6Ò'&÷VæB"7G&ö¶RÖÆæV¦öãÒ'&÷VæB#ãÇ&V7BÒ#""Ò#B"vGFÒ##"VvCÒ#b"'Ò#""óãÇFCÒ&Ó#"rÓãrRãvãBãBÓ"ãbÃ"r"óãÂ÷7fsà¢6öçF7Bæfð¢Âöà¢ÂöFcà ¢ÆFb6Æ73Ò&W&ò×6ö6Ç2#à¢Æ&VcÒ&GG3¢òöÆæ¶VFâæ6öÒöâ÷6ÆÖæÖVC"F&vWCÒ%ö&Ææ²"&VÃÒ&æö÷VæW""6Æ73Ò'2ÖÆæ²"FFÆSÒ$Ææ¶VDâ#à¢Ç7frvGFÒ#r"VvCÒ#r"fWt&÷Ò##B#B"fÆÃÒ&7W'&VçD6öÆ÷"#ãÇFCÒ$ÓbbbbgcvÓGbÓv""Ó"Ó"""Ó"'cvÓGbÓvbbbÓg¢"óãÇ&V7BÒ#""Ò#"vGFÒ#B"VvCÒ#""óãÆ6&6ÆR7Ò#B"7Ò#B"#Ò#""óãÂ÷7fsà¢Âöà¢Æ&VcÒ&GG3¢òövFV"æ6öÒ÷6ÖS#B"F&vWCÒ%ö&Ææ²"&VÃÒ&æö÷VæW""6Æ73Ò'2ÖÆæ²"FFÆSÒ$vDV"#à¢Ç7frvGFÒ#r"VvCÒ#r"fWt&÷Ò##B#B"fÆÃÒ&7W'&VçD6öÆ÷"#ãÇFCÒ$Ó"$3bãCsr""bãCB""ãv3BãC#R"ãcRãbã3ãSBãRã"ãc"Òã#rãc"ÒãC2Òã#3rÒãÒãcÒã2Óãs2Ó"ãs"ãcRÓ2ã3cÓã3C2Ó2ã3cÓã3C2ÒãCSBÓãSÓãÓãCcbÓãÓãCcbÒãÒãc"ãcÒãcãcÒãcã2ãrãS3ã3"ãS3ã3"ã"ãS2"ã3Cã"ãã3"ã"ÒãcCrã3RÓããc3bÓã33Ó"ã#"Òã#S2ÓBãSSRÓã2ÓBãSSRÓBãSÓã2ã3Óãã#Ó"ãcÒã2Òã#S2ÒãCCbÓã#s"ãÓ"ãcRãBÒã#r"ãsRã#dãScBãScB"bãCFãSãS"ãSBã33v3ãÓã#b"ãsCrÓã#r"ãsCrÓã#rãSCbã3sã#""ã3ã"ãcSãcBãrã#ãSRã#"ãc2ãCÓ"ã33BãcRÓBãScbBãC2ã3Sã3ãcsã"ãcsãSRã33Òã""ãCÒã""ãsCrã#cããSãcãC$ã"ã"#""ãt3#"bãCBrãS#"""'¢"óãÂ÷7fsà¢Âöà¢Æ&VcÒ&ÖÇFó§6ÆÖæÖVCc#÷FÖÂæ6öÒ"6Æ73Ò'2ÖÆæ²"FFÆSÒ$VÖÂ#à¢Ç7frvGFÒ#r"VvCÒ#r"fWt&÷Ò##B#B"fÆÃÒ&æöæR"7G&ö¶SÒ&7W'&VçD6öÆ÷""7G&ö¶R×vGFÒ#""7G&ö¶RÖÆæV6Ò'&÷VæB"7G&ö¶RÖÆæV¦öãÒ'&÷VæB#ãÇ&V7BÒ#""Ò#B"vGFÒ##"VvCÒ#b"'Ò#""óãÇFCÒ&Ó#"rÓãrRãvãBãBÓ"ãbÃ"r"óãÂ÷7fsà¢Âöà¢ÂöFcà¢ÂöFcà¢ÆFb6Æ73Ò'67&öÆÂÖ7VR#ãÆFb6Æ73Ò&&"#ãÂöFcãÂöFcà£Â÷6V7Föãà £ÂÒÒ$õUBÒÓà£ÆFb6Æ73Ò'6V7Föâ"CÒ&&÷WB#à¢Ç6Æ73Ò'6V7FöâÖWV'&÷r&WfVÂ#ç6òÂvòÒóÂ÷à¢Æ"6Æ73Ò'6V7FöâÖVFær&WfVÂ#ä&÷WBÖSÂö#à ¢ÆFb6Æ73Ò&6ÆV&æ6R×7G&&WfVÂ#à¢ÆFb6Æ73Ò&6öâ#à¢Ç7frvGFÒ#3""VvCÒ#3""fWt&÷Ò##B#B"fÆÃÒ&æöæR"7G&ö¶SÒ&7W'&VçD6öÆ÷""7G&ö¶R×vGFÒ#ã"7G&ö¶RÖÆæV6Ò'&÷VæB"7G&ö¶RÖÆæV¦öãÒ'&÷VæB#ãÇFCÒ$Ó"#'3ÓBÓcVÂÓÓ2Ó7cv3b¢"óãÂ÷7fsà¢ÂöFcà¢ÆFcà¢Æ3ä7FfR6V7&WB6V7W&G6ÆV&æ6RfÖF6²ÆWfVÂÂö3à¢Çäw&çFVBF&÷Vv×6òÖ÷BFRFW'FÖVçBöbæFöæÂFVfVæ6RâVÆv&ÆRf÷"&öÆW2&WV&ær6Æ76fVB66W72ãÂ÷à¢ÂöFcà¢ÂöFcà ¢ÆFb6Æ73Ò&&÷WBÖÆ÷WB#à¢ÆFb6Æ73Ò&6&B&WfVÂ#à¢ÆFb6Æ73Ò&6&BÖ6öâ#à¢Ç7frvGFÒ##b"VvCÒ##b"fWt&÷Ò##B#B"fÆÃÒ&æöæR"7G&ö¶SÒ&7W'&VçD6öÆ÷""7G&ö¶R×vGFÒ#ã"7G&ö¶RÖÆæV6Ò'&÷VæB"7G&ö¶RÖÆæV¦öãÒ'&÷VæB#ãÇ&V7BÒ#""Ò#r"vGFÒ##"VvCÒ#B"'Ò#""'Ò#""óãÇFCÒ$Ób#cV""Ó"Ó&ÓF""Ó"'cb"óãÂ÷7fsà¢ÂöFcà¢Æ3åv÷&²WW&Væ6SÂö3à¢ÆFb6Æ73Ò&WÖFVÒ#à¢ÆFb6Æ73Ò&W×&öÆR#åf'GVÆ¦Föâf×²æg&7G'V7GW&RVævæVW&ær6òÖ÷ÂöFcà¢ÆFb6Æ73Ò&WÖ÷&r#äFW'FÖVçBöbæFöæÂFVfVæ6RDtDÂöFcà¢ÆFb6Æ73Ò&WÖFFR#ä&Â##bfæF6²&W6VçBfæ'7²fÖFF÷C²fæ'7²÷GFvÂôãÂöFcà¢ÂöFcà¢ÆFb6Æ73Ò&WÖFVÒ#à¢ÆFb6Æ73Ò&W×&öÆR#å6V7W&G÷W&Föç3ÂöFcà¢ÆFb6Æ73Ò&WÖ÷&r#ä6öÖÖ76öæ&W2Â&ÆÖVçBÆÂ6VçG&R&Æö6³ÂöFcà¢ÆFb6Æ73Ò&WÖFFR#ä§VÂ##BfæF6²&W6VçBfæ'7²fÖFF÷C²fæ'7²÷GFvÂôãÂöFcà¢ÂöFcà¢ÂöFcà ¢ÆFb6Æ73Ò&6&B&WfVÂ#à¢ÆFb6Æ73Ò&6&BÖ6öâ#à¢Ç7frvGFÒ##b"VvCÒ##b"fWt&÷Ò##B#B"fÆÃÒ&æöæR"7G&ö¶SÒ&7W'&VçD6öÆ÷""7G&ö¶R×vGFÒ#ã"7G&ö¶RÖÆæV6Ò'&÷VæB"7G&ö¶RÖÆæV¦öãÒ'&÷VæB#ãÇFCÒ$Ó#"cdÓ"ÃÓRRÓW¢"óãÇFCÒ$Ób'cV3222"bÓR"óãÂ÷7fsà¢ÂöFcà¢Æ3äVGV6FöãÂö3à¢ÆFb6Æ73Ò&WÖFVÒ#à¢ÆFb6Æ73Ò&W×&öÆR#ä&6VÆ÷"öb6ö×WFW"66Væ6Röæ÷W'2ÂöFcà¢ÆFb6Æ73Ò&WÖ÷&r#ä6&ÆWFöâVæfW'6GÂöFcà¢ÆFb6Æ73Ò&WÖFFR#äWV7FVBÖ##fæ'7²fÖFF÷C²fæ'7²÷GFvÂôãÂöFcà¢ÂöFcà¢ÆFb6Æ73Ò'Fr×&÷r#à¢Ç7â6Æ73Ò'Fr#ä7&W'6V7W&G7G&VÓÂ÷7ãà¢Ç7â6Æ73Ò'Fr#ä6òÖ÷Â÷7ãà¢Ç7â6Æ73Ò'Fr#äÖæ÷"âÖFÂ÷7ãà¢ÂöFcà¢ÂöFcà ¢ÆFb6Æ73Ò&6&B&òÖ6&B&WfVÂ#à¢ÆFb6Æ73Ò&&÷WB×÷Fò×w&#à¢ÆÖr7&3Ò'&öfÆRæ§r"ÇCÒ%6ÆÖâÖVB"6Æ73Ò&&÷WB×÷Fò"óà¢ÂöFcà¢ÇåF&B×V"6ö×WFW"66Væ6R7GVFVçBB6&ÆWFöâ7V6Æ¦ærâ7&W'6V7W&GÂ7W'&VçFÇFöær6òÖ÷BFRÇ7G&öæsäFW'FÖVçBöbæFöæÂFVfVæ6SÂ÷7G&öæsâv÷&¶æröâVçFW'&6Rf'GVÆ¦Föâ7&÷72d×v&RU5Âd6VçFW"ÂæB÷&¦öâVçf&öæÖVçG2fÖF6²vFâ7FfRÇ7G&öæsäÆWfVÂ6V7&WB6ÆV&æ6SÂ÷7G&öæsâãÂ÷à¢ÇäwfR'VÇB6Æ÷VB6V7W&G66ææW'2ÂæWGv÷&²ÖöæF÷&ærÆ'2ÂæBgVÆæW&&ÆG76W76ÖVçBVçf&öæÖVçG2g&öÒFRw&÷VæBWâÆ¶RVæFW'7FæFær÷r77FV×2'&V²2×V62÷rFWw&R'VÇBâvWFW"Bw2Ö66öæfwW&VBÒöÆ7÷"7W76÷W24ÕE6¶WBÂfæBFRW§¦ÆRv÷'F6öÇfærãÂ÷à¢Çä&ÆæwVÂâVævÆ6æBg&Væ6ÂfÇVVçBâ&&2â÷WG6FRöbFV6¢wÒÂvÖærÂæB6F6ærWvFfÖÇvVâ6ââÇv2fR&ö¦V7B'VæææröâFR6FRfÖF6²ÆWBw26öææV7Bb6öÖWFær6VvB÷W"WRãÂ÷à¢ÂöFcà¢ÂöFcà£ÂöFcà £ÂÒÒ$ô¤T5E2ÒÓà£ÆFb6Æ73Ò'6V7Föâ"CÒ'&ö¦V7G2#à¢Ç6Æ73Ò'6V7FöâÖWV'&÷r&WfVÂ#çvBwfR'VÇCÂ÷à¢Æ"6Æ73Ò'6V7FöâÖVFær&WfVÂ#å&ö¦V7G3Âö#à ¢ÆFb6Æ73Ò'&ö¦V7G2Öw&B#à ¢ÂÒÒ6Æ÷VB6V7W&G66ææW"ÒÓà¢ÆFb6Æ73Ò'&ö¢Ö6&B&WfVÂ#à¢ÆFb6Æ73Ò'&ö¢×F÷#à¢ÆFb6Æ73Ò'&ö¢Ö6öâ#à¢Ç7frvGFÒ##b"VvCÒ##b"fWt&÷Ò##B#B"fÆÃÒ&æöæR"7G&ö¶SÒ&7W'&VçD6öÆ÷""7G&ö¶R×vGFÒ#ã"7G&ö¶RÖÆæV6Ò'&÷VæB"7G&ö¶RÖÆæV¦öãÒ'&÷VæB#ãÇFCÒ$ÓÓã#d#RRÓ¢"óãÂ÷7fsà¢ÂöFcà¢ÆFb6Æ73Ò'&ö¢ÖÆæ·2#à¢Æ&VcÒ&GG3¢òövFV"æ6öÒ÷6ÖS#Bö6Æ÷VB×6V7W&G×66ææW""F&vWCÒ%ö&Ææ²"&VÃÒ&æö÷VæW""6Æ73Ò'&ö¢ÖÆæ²"FFÆSÒ$vDV"#à¢Ç7frvGFÒ#B"VvCÒ#B"fWt&÷Ò##B#B"fÆÃÒ&7W'&VçD6öÆ÷"#ãÇFCÒ$Ó"$3bãCsr""bãCB""ãv3BãC#R"ãcRãbã3ãSBãRã"ãc"Òã#rãc"ÒãC2Òã#3rÒãÒãcÒã2Óãs2Ó"ãs"ãcRÓ2ã3cÓã3C2Ó2ã3cÓã3C2ÒãCSBÓãSÓãÓãCcbÓãÓãCcbÒãÒãc"ãcÒãcãcÒãcã2ãrãS3ã3"ãS3ã3"ã"ãS2"ã3Cã"ãã3"ã"ÒãcCrã3RÓããc3bÓã33Ó"ã#"Òã#S2ÓBãSSRÓã2ÓBãSSRÓBãSÓã2ã3Óãã#Ó"ãcÒã2Òã#S2ÒãCCbÓã#s"ãÓ"ãcRãBÒã#r"ãsRã#dãScBãScB"bãCFãSãS"ãSBã33v3ãÓã#b"ãsCrÓã#r"ãsCrÓã#rãSCbã3sã#""ã3ã"ãcSãcBãrã#ãSRã#"ãc2ãCÓ"ã33BãcRÓBãScbBãC2ã3Sã3ãcsã"ãcsãSRã33Òã""ãCÒã""ãsCrã#cããSãcãC$ã"ã"#""ãt3#"bãCBrãS#"""'¢"óãÂ÷7fsà¢Âöà¢ÂöFcà¢ÂöFcà¢Æ3ä6Æ÷VB6V7W&GÖ66öæfwW&Föâ66ææW#Âö3à¢ÇåFöâÖ&6VB4ÄFööÂFBVFG2u2Vçf&öæÖVçG2f÷"ÒÖ66öæfwW&Föç2ÂW÷6VB32'V6¶WG2ÂæB÷fW&ÇW&Ö76fR6V7W&Gw&÷W2fÖF6²fÆvvær&6·2æB7VvvW7Fær&VÖVFFöâ7FW2ãÂ÷à¢ÆFb6Æ73Ò'7F6²#à¢Ç7â6Æ73Ò&6#åFöãÂ÷7ããÇ7â6Æ73Ò&6#äu3Â÷7ããÇ7â6Æ73Ò&6#äÓÂ÷7ããÇ7â6Æ73Ò&6#å33Â÷7ãà¢ÂöFcà¢ÂöFcà ¢ÂÒÒæWGv÷&²G&ff2æÇF72ÒÓà¢ÆFb6Æ73Ò'&ö¢Ö6&B&WfVÂ#à¢ÆFb6Æ73Ò'&ö¢×F÷#à¢ÆFb6Æ73Ò'&ö¢Ö6öâ#à¢Ç7frvGFÒ##b"VvCÒ##b"fWt&÷Ò##B#B"fÆÃÒ&æöæR"7G&ö¶SÒ&7W'&VçD6öÆ÷""7G&ö¶R×vGFÒ#ã"7G&ö¶RÖÆæV6Ò'&÷VæB"7G&ö¶RÖÆæV¦öãÒ'&÷VæB#ãÇFCÒ$ÓR"ãSVBã"óãÇFCÒ$ÓãC"bb#ãb"óãÇFCÒ$ÓãS2bãbbbãR"óãÆÆæRÒ#""Ò##"#Ò#"ã"#Ò##"óãÂ÷7fsà¢ÂöFcà¢ÆFb6Æ73Ò'&ö¢ÖÆæ·2#à¢Æ&VcÒ&GG3¢òövFV"æ6öÒ÷6ÖS#BöæWGv÷&²×G&ff2ÖæÇF72"F&vWCÒ%ö&Ææ²"&VÃÒ&æö÷VæW""6Æ73Ò'&ö¢ÖÆæ²"FFÆSÒ$vDV"#à¢Ç7frvGFÒ#B"VvCÒ#B"fWt&÷Ò##B#B"fÆÃÒ&7W'&VçD6öÆ÷"#ãÇFCÒ$Ó"$3bãCsr""bãCB""ãv3BãC#R"ãcRãbã3ãSBãRã"ãc"Òã#rãc"ÒãC2Òã#3rÒãÒãcÒã2Óãs2Ó"ãs"ãcRÓ2ã3cÓã3C2Ó2ã3cÓã3C2ÒãCSBÓãSÓãÓãCcbÓãÓãCcbÒãÒãc"ãcÒãcãcÒãcã2ãrãS3ã3"ãS3ã3"ã"ãS2"ã3Cã"ãã3"ã"ÒãcCrã3RÓããc3bÓã33Ó"ã#"Òã#S2ÓBãSSRÓã2ÓBãSSRÓBãSÓã2ã3Óãã#Ó"ãcÒã2Òã#S2ÒãCCbÓã#s"ãÓ"ãcRãBÒã#r"ãsRã#dãScBãScB"bãCFãSãS"ãSBã33v3ãÓã#b"ãsCrÓã#r"ãsCrÓã#rãSCbã3sã#""ã3ã"ãcSãcBãrã#ãSRã#"ãc2ãCÓ"ã33BãcRÓBãScbBãC2ã3Sã3ãcsã"ãcsãSRã33Òã""ãCÒã""ãsCrã#cããSãcãC$ã"ã"#""ãt3#"bãCBrãS#"""'¢"óãÂ÷7fsà¢Âöà¢ÂöFcà¢ÂöFcà¢Æ3äæWGv÷&²G&ff2æÇF72Æ#Âö3à¢Çå6×VÆFVBæWGv÷&¶VBVçf&öæÖVçBÂ6GW&VBG&ff2âv&W6&²ÂæBw&÷FRFöâ67&G2FòFWFV7B''WFRÖf÷&6RGFV×G2æB7W76÷W24ÕEGFW&ç2âævW7FVBçFò7ÇVæ²f÷"ÆfRæöÖÇF6&ö&BãÂ÷à¢ÆFb6Æ73Ò'7F6²#à¢Ç7â6Æ73Ò&6#åf'GVÄ&÷Â÷7ããÇ7â6Æ73Ò&6#åv&W6&³Â÷7ããÇ7â6Æ73Ò&6#åFöãÂ÷7ããÇ7â6Æ73Ò&6#å7ÇVæ³Â÷7ãà¢ÂöFcà¢ÂöFcà ¢ÂÒÒgVÆæW&&ÆG76W76ÖVçBÆ"ÒÓà¢ÆFb6Æ73Ò'&ö¢Ö6&B&WfVÂ#à¢ÆFb6Æ73Ò'&ö¢×F÷#à¢ÆFb6Æ73Ò'&ö¢Ö6öâ#à¢Ç7frvGFÒ##b"VvCÒ##b"fWt&÷Ò##B#B"fÆÃÒ&æöæR"7G&ö¶SÒ&7W'&VçD6öÆ÷""7G&ö¶R×vGFÒ#ã"7G&ö¶RÖÆæV6Ò'&÷VæB"7G&ö¶RÖÆæV¦öãÒ'&÷VæB#ãÇFCÒ$Ó"#'3ÓBÓcVÂÓÓ2Ó7cv3b¢"óãÂ÷7fsà¢ÂöFcà¢ÆFb6Æ73Ò'&ö¢ÖÆæ·2#à¢Æ&VcÒ&GG3¢òövFV"æ6öÒ÷6ÖS#B÷gVÆâÖ76W76ÖVçBÖÆ""F&vWCÒ%ö&Ææ²"&VÃÒ&æö÷VæW""6Æ73Ò'&ö¢ÖÆæ²"FFÆSÒ$vDV"#à¢Ç7frvGFÒ#B"VvCÒ#B"fWt&÷Ò##B#B"fÆÃÒ&7W'&VçD6öÆ÷"#ãÇFCÒ$Ó"$3bãCsr""bãCB""ãv3BãC#R"ãcRãbã3ãSBãRã"ãc"Òã#rãc"ÒãC2Òã#3rÒãÒãcÒã2Óãs2Ó"ãs"ãcRÓ2ã3cÓã3C2Ó2ã3cÓã3C2ÒãCSBÓãSÓãÓãCcbÓãÓãCcbÒãÒãc"ãcÒãcãcÒãcã2ãrãS3ã3"ãS3ã3"ã"ãS2"ã3Cã"ãã3"ã"ÒãcCrã3RÓããc3bÓã33Ó"ã#"Òã#S2ÓBãSSRÓã2ÓBãSSRÓBãSÓã2ã3Óãã#Ó"ãcÒã2Òã#S2ÒãCCbÓã#s"ãÓ"ãcRãBÒã#r"ãsRã#dãScBãScB"bãCFãSãS"ãSBã33v3ãÓã#b"ãsCrÓã#r"ãsCrÓã#rãSCbã3sã#""ã3ã
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--text);font-family:var(--font);line-height:1.6;transition:background .3s,color .3s}
+    a{color:inherit;text-decoration:none}
+    img{display:block;max-width:100%}
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:.9rem 2rem;backdrop-filter:blur(12px);background:rgba(10,12,16,.8);border-bottom:1px solid var(--card-border);transition:background .3s}
+    .light nav{background:rgba(240,244,248,.85)}
+    .nav-logo{font-weight:700;font-size:1.1rem;letter-spacing:-.5px;color:var(--accent)}
+    .nav-links{display:flex;gap:1.8rem;list-style:none;align-items:center}
+    .nav-links a{font-size:.9rem;color:var(--muted);transition:color .2s}
+    .nav-links a:hover{color:var(--accent)}
+    .nav-right{display:flex;gap:.75rem;align-items:center}
+    .btn-theme{background:none;border:1px solid var(--card-border);border-radius:8px;padding:.4rem .65rem;cursor:pointer;color:var(--muted);transition:all .2s;display:flex;align-items:center}
+    .btn-theme:hover{border-color:var(--accent);color:var(--accent)}
+    .btn-resume{background:var(--accent);color:#000;border:none;border-radius:8px;padding:.45rem 1.1rem;font-size:.85rem;font-weight:600;cursor:pointer;transition:opacity .2s}
+    .btn-resume:hover{opacity:.85}
+    .nav-burger{display:none;background:none;border:none;cursor:pointer;padding:.4rem;color:var(--text)}
+    .nav-mobile{display:none;flex-direction:column;gap:1rem;padding:1.2rem 2rem;background:var(--bg2);border-bottom:1px solid var(--card-border)}
+    .nav-mobile a{color:var(--muted);font-size:.95rem}
+    .nav-mobile.open{display:flex}
+    @media(max-width:768px){.nav-links{display:none}.nav-burger{display:block}}
+    .hero{min-height:100vh;display:flex;align-items:center;padding:6rem 2rem 3rem;max-width:1100px;margin:0 auto;gap:3rem}
+    .hero-text{flex:1}
+    .hero-eyebrow{font-size:.8rem;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+    .hero-eyebrow::before{content:'';width:24px;height:2px;background:var(--accent);display:inline-block}
+    .hero-name{font-size:clamp(2.2rem,6vw,4rem);font-weight:800;line-height:1.1;letter-spacing:-1.5px;margin-bottom:.75rem}
+    .hero-name span{color:var(--accent)}
+    .hero-role{font-size:1.15rem;color:var(--muted);margin-bottom:1.6rem;min-height:1.8rem}
+    .hero-role .cursor{display:inline-block;width:2px;height:1em;background:var(--accent);animation:blink .7s step-end infinite;margin-left:2px;vertical-align:text-bottom}
+    @keyframes blink{50%{opacity:0}}
+    .hero-bio{color:var(--muted);max-width:520px;margin-bottom:2rem;font-size:.97rem}
+    .hero-tags{display:flex;flex-wrap:wrap;gap:.55rem;margin-bottom:2.2rem}
+    .tag{font-size:.75rem;font-weight:500;padding:.3rem .75rem;border-radius:20px;background:rgba(0,255,157,.08);color:var(--accent);border:1px solid rgba(0,255,157,.2)}
+    .light .tag{background:rgba(5,150,105,.1);border-color:rgba(5,150,105,.25)}
+    .hero-btns{display:flex;gap:1rem;flex-wrap:wrap}
+    .btn-primary{background:var(--accent);color:#000;border:none;border-radius:10px;padding:.75rem 1.8rem;font-weight:700;cursor:pointer;font-size:.95rem;transition:opacity .2s;display:inline-flex;align-items:center;gap:.5rem}
+    .btn-primary:hover{opacity:.85}
+    .btn-secondary{background:transparent;color:var(--text);border:1px solid var(--card-border);border-radius:10px;padding:.75rem 1.8rem;font-weight:600;cursor:pointer;font-size:.95rem;transition:all .2s;display:inline-flex;align-items:center;gap:.5rem}
+    .btn-secondary:hover{border-color:var(--accent);color:var(--accent)}
+    .hero-photo{flex:0 0 280px;display:flex;flex-direction:column;align-items:center;gap:1.5rem}
+    .photo-frame{width:220px;height:220px;border-radius:50%;border:3px solid var(--accent);padding:4px;background:var(--card);overflow:hidden;position:relative}
+    .photo-frame img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+    .hero-stats{display:flex;gap:1.2rem}
+    .stat{text-align:center}
+    .stat-n{font-size:1.4rem;font-weight:800;color:var(--accent)}
+    .stat-l{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+    @media(max-width:768px){.hero{flex-direction:column-reverse;padding-top:5rem}.hero-photo{flex:0 0 auto}}
+    section{padding:5rem 2rem;max-width:1100px;margin:0 auto}
+    .section-eyebrow{font-size:.78rem;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:.6rem}
+    .section-heading{font-size:clamp(1.6rem,4vw,2.4rem);font-weight:800;letter-spacing:-1px;margin-bottom:2.5rem}
+    .divider{width:100%;height:1px;background:var(--card-border);margin:0 auto}
+    .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+    @media(max-width:640px){.about-grid{grid-template-columns:1fr}}
+    .about-card{background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius);padding:1.5rem}
+    .about-card h3{font-size:.95rem;font-weight:700;margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem;color:var(--accent)}
+    .about-card p,.about-card li{font-size:.9rem;color:var(--muted);line-height:1.7}
+    .about-card ul{list-style:none;display:flex;flex-direction:column;gap:.35rem}
+    .about-card li::before{content:'›';color:var(--accent);margin-right:.5rem}
+    .projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.5rem}
+    .proj-card{background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius);padding:1.6rem;display:flex;flex-direction:column;gap:1rem;transition:border-color .2s,transform .2s}
+    .proj-card:hover{border-color:var(--accent);transform:translateY(-3px)}
+    .proj-icon{width:44px;height:44px;border-radius:10px;background:rgba(0,255,157,.08);border:1px solid rgba(0,255,157,.15);display:flex;align-items:center;justify-content:center}
+    .light .proj-icon{background:rgba(5,150,105,.08);border-color:rgba(5,150,105,.2)}
+    .proj-card h3{font-size:1rem;font-weight:700}
+    .proj-card p{font-size:.88rem;color:var(--muted);flex:1}
+    .proj-tags{display:flex;flex-wrap:wrap;gap:.4rem}
+    .proj-tag{font-size:.72rem;padding:.2rem .55rem;border-radius:5px;background:var(--bg2);color:var(--muted);border:1px solid var(--card-border)}
+    .proj-links{display:flex;gap:.75rem;margin-top:.25rem}
+    .proj-link{font-size:.82rem;font-weight:600;color:var(--accent);display:flex;align-items:center;gap:.3rem;transition:opacity .2s}
+    .proj-link:hover{opacity:.7}
+    .skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.2rem}
+    .skill-cat{background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius);padding:1.4rem}
+    .skill-cat h3{font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin-bottom:1rem;font-weight:700}
+    .skill-list{display:flex;flex-wrap:wrap;gap:.5rem}
+    .skill-pill{font-size:.8rem;padding:.3rem .7rem;border-radius:20px;background:var(--bg2);border:1px solid var(--card-border);color:var(--muted)}
+    .quiz-wrap{max-width:680px;margin:0 auto}
+    .quiz-box{background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius);padding:2rem}
+    .quiz-progress{height:4px;background:var(--bg2);border-radius:2px;margin-bottom:1.5rem;overflow:hidden}
+    .quiz-progress-bar{height:100%;background:var(--accent);border-radius:2px;transition:width .4s}
+    .quiz-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem;flex-wrap:wrap;gap:.5rem}
+    .quiz-q-label{font-size:.8rem;color:var(--muted);display:flex;align-items:center;gap:.4rem}
+    .quiz-badges{display:flex;gap:.5rem;align-items:center}
+    .badge-diff{font-size:.72rem;font-weight:700;padding:.25rem .65rem;border-radius:20px;text-transform:uppercase;letter-spacing:.05em}
+    .badge-easy{background:rgba(34,197,94,.15);color:#4ade80;border:1px solid rgba(34,197,94,.3)}
+    .badge-medium{background:rgba(251,191,36,.15);color:#fbbf24;border:1px solid rgba(251,191,36,.3)}
+    .badge-hard{background:rgba(239,68,68,.15);color:#f87171;border:1px solid rgba(239,68,68,.3)}
+    .badge-score{font-size:.78rem;font-weight:700;padding:.25rem .65rem;border-radius:20px;background:rgba(0,255,157,.08);color:var(--accent);border:1px solid rgba(0,255,157,.2)}
+    .quiz-question{font-size:1.05rem;font-weight:600;margin-bottom:1.2rem;line-height:1.5}
+    .quiz-options{display:flex;flex-direction:column;gap:.65rem;margin-bottom:1rem}
+    .quiz-opt{background:var(--bg2);border:1px solid var(--card-border);border-radius:9px;padding:.85rem 1.1rem;cursor:pointer;font-size:.9rem;text-align:left;color:var(--text);transition:all .15s;width:100%}
+    .quiz-opt:hover:not(:disabled){border-color:var(--accent);background:rgba(0,255,157,.05)}
+    .quiz-opt.correct{border-color:#4ade80;background:rgba(34,197,94,.1);color:#4ade80}
+    .quiz-opt.wrong{border-color:#f87171;background:rgba(239,68,68,.1);color:#f87171}
+    .quiz-opt.reveal{border-color:#4ade80;background:rgba(34,197,94,.07)}
+    .quiz-feedback{font-size:.85rem;color:var(--muted);min-height:1.4rem;font-style:italic;margin-bottom:1rem;line-height:1.5}
+    .quiz-next{width:100%;padding:.85rem;background:var(--accent);color:#000;border:none;border-radius:9px;font-weight:700;font-size:.92rem;cursor:pointer;opacity:.4;pointer-events:none;transition:opacity .2s}
+    .quiz-next.active{opacity:1;pointer-events:auto}
+    .quiz-result{text-align:center;padding:1rem 0}
+    .score-big{font-size:3rem;font-weight:900;color:var(--accent);line-height:1}
+    .score-sub{font-size:.95rem;color:var(--muted);margin:.4rem 0 1rem}
+    .result-msg{font-size:1rem;margin-bottom:1.5rem;line-height:1.5}
+    .quiz-restart{background:transparent;border:1px solid var(--accent);color:var(--accent);border-radius:9px;padding:.75rem 2rem;font-weight:700;cursor:pointer;transition:all .2s}
+    .quiz-restart:hover{background:var(--accent);color:#000}
+    .contact-wrap{display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+    @media(max-width:640px){.contact-wrap{grid-template-columns:1fr}}
+    .contact-info{display:flex;flex-direction:column;gap:1rem}
+    .contact-item{background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius);padding:1.2rem;display:flex;align-items:center;gap:1rem}
+    .contact-icon{width:40px;height:40px;border-radius:9px;background:rgba(0,255,157,.08);border:1px solid rgba(0,255,157,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .contact-item span{font-size:.85rem;color:var(--muted)}
+    .contact-item strong{display:block;font-size:.92rem;color:var(--text)}
+    .contact-form{background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius);padding:1.6rem;display:flex;flex-direction:column;gap:1rem}
+    .form-group{display:flex;flex-direction:column;gap:.4rem}
+    .form-group label{font-size:.8rem;color:var(--muted);font-weight:600}
+    .form-group input,.form-group textarea{background:var(--bg2);border:1px solid var(--card-border);border-radius:8px;padding:.7rem 1rem;color:var(--text);font-family:inherit;font-size:.9rem;outline:none;transition:border-color .2s;resize:vertical}
+    .form-group input:focus,.form-group textarea:focus{border-color:var(--accent)}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+    @media(max-width:480px){.form-row{grid-template-columns:1fr}}
+    .btn-send{background:var(--accent);color:#000;border:none;border-radius:9px;padding:.8rem;font-weight:700;cursor:pointer;font-size:.92rem;transition:opacity .2s}
+    .btn-send:hover{opacity:.85}
+    footer{text-align:center;padding:2.5rem 1rem;border-top:1px solid var(--card-border);color:var(--muted);font-size:.82rem}
+    footer a{color:var(--accent)}
+    .reveal{opacity:0;transform:translateY(20px);transition:opacity .6s,transform .6s}
+    .reveal.visible{opacity:1;transform:none}
+  </style>
+</head>
+<body>
+<nav id="navbar">
+  <span class="nav-logo">SA</span>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#quiz">Quiz</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="btn-theme" id="themeBtn" aria-label="Toggle theme">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </button>
+    <a href="Salman_Ahmed_Resume.pdf" target="_blank"><button class="btn-resume">Resume</button></a>
+    <button class="nav-burger" id="navBurger" aria-label="Menu">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+</nav>
+<div class="nav-mobile" id="navMobile">
+  <a href="#about">About</a><a href="#projects">Projects</a><a href="#skills">Skills</a><a href="#quiz">Quiz</a><a href="#contact">Contact</a>
+</div>
+<div class="hero">
+  <div class="hero-text">
+    <div class="hero-eyebrow">Cybersecurity &amp; Infrastructure</div>
+    <h1 class="hero-name">Salman<br><span>Ahmed</span></h1>
+    <p class="hero-role"><span id="typewriter"></span><span class="cursor"></span></p>
+    <p class="hero-bio">Cybersecurity student at Carleton University with hands-on experience securing Government of Canada infrastructure. Level II Secret Clearance. Passionate about threat detection, cloud security, and building resilient systems.</p>
+    <div class="hero-tags">
+      <span class="tag">Level II Secret Clearance</span>
+      <span class="tag">DND Co-op</span>
+      <span class="tag">Carleton University</span>
+      <span class="tag">Cloud Security</span>
+      <span class="tag">Network Defense</span>
+    </div>
+    <div class="hero-btns">
+      <a href="#projects"><button class="btn-primary"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8m-4-4v4"/></svg>View Projects</button></a>
+      <a href="#contact"><button class="btn-secondary"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Get in Touch</button></a>
+    </div>
+  </div>
+  <div class="hero-photo">
+    <div class="photo-frame"><img src="profile.jpg" alt="Salman Ahmed" onerror="this.style.display='none';this.parentElement.style.background='var(--bg2)'" /></div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-n">5+</div><div class="stat-l">Projects</div></div>
+      <div class="stat"><div class="stat-n">L2</div><div class="stat-l">Clearance</div></div>
+      <div class="stat"><div class="stat-n">2+</div><div class="stat-l">Years Exp</div></div>
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+<section id="about">
+  <p class="section-eyebrow reveal">background</p>
+  <h2 class="section-heading reveal">About Me</h2>
+  <div class="about-grid">
+    <div class="about-card reveal">
+      <h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Who I Am</h3>
+      <p>I'm a cybersecurity and computer science student at Carleton University, currently in my 3rd year. I have real-world experience working as a Virtualization &amp; Infrastructure Co-op at the Department of National Defence (DND), where I secured government systems and held a Level II Secret Clearance.</p>
+    </div>
+    <div class="about-card reveal">
+      <h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Experience</h3>
+      <ul>
+        <li>Virtualization &amp; Infrastructure Co-op &mdash; DND</li>
+        <li>Configured VMware ESXi &amp; vSphere environments</li>
+        <li>Deployed Windows Server 2019 / Active Directory</li>
+        <li>Network security hardening &amp; patch management</li>
+        <li>Level II Government of Canada Secret Clearance</li>
+      </ul>
+    </div>
+    <div class="about-card reveal">
+      <h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>Education</h3>
+      <ul>
+        <li>B.Eng. Cybersecurity &mdash; Carleton University</li>
+        <li>Expected Graduation: 2026</li>
+        <li>Relevant: Network Security, Cryptography, OS Security</li>
+        <li>CTF Competitions &amp; Security Research</li>
+      </ul>
+    </div>
+    <div class="about-card reveal">
+      <h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>Currently</h3>
+      <ul>
+        <li>Building cloud security tooling in Python &amp; AWS</li>
+        <li>Studying for CompTIA Security+ certification</li>
+        <li>Exploring penetration testing &amp; red team techniques</li>
+        <li>Open to Summer 2026 internship opportunities</li>
+      </ul>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+<section id="projects">
+  <p class="section-eyebrow reveal">portfolio</p>
+  <h2 class="section-heading reveal">Projects</h2>
+  <div class="projects-grid">
+    <div class="proj-card reveal">
+      <div class="proj-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg></div>
+      <h3>Cloud Security Misconfiguration Scanner</h3>
+      <p>Automated Python tool to audit AWS environments for common misconfigurations across IAM, S3, Security Groups, and CloudTrail. Generates detailed risk reports with remediation steps.</p>
+      <div class="proj-tags"><span class="proj-tag">Python</span><span class="proj-tag">AWS</span><span class="proj-tag">IAM</span><span class="proj-tag">S3</span><span class="proj-tag">boto3</span></div>
+      <div class="proj-links"><a href="https://github.com/sahme24/cloud-security-scanner" target="_blank" class="proj-link"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>GitHub</a></div>
+    </div>
+    <div class="proj-card reveal">
+      <div class="proj-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+      <h3>Network Traffic Analytics Lab</h3>
+      <p>Homelab environment using VirtualBox, Wireshark, and Splunk to capture, analyze, and correlate network traffic. Detects anomalies and simulates common attack patterns for blue team practice.</p>
+      <div class="proj-tags"><span class="proj-tag">VirtualBox</span><span class="proj-tag">Wireshark</span><span class="proj-tag">Python</span><span class="proj-tag">Splunk</span><span class="proj-tag">SIEM</span></div>
+      <div class="proj-links"><a href="https://github.com/sahme24/network-traffic-analytics" target="_blank" class="proj-link"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>GitHub</a></div>
+    </div>
+    <div class="proj-card reveal">
+      <div class="proj-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+      <h3>Vulnerability Assessment Lab</h3>
+      <p>Configured Nessus and OpenVAS scanners against intentionally vulnerable VMs. Wrote Python scripts to parse scan output, prioritize CVEs by CVSS score, and generate executive-style PDF reports.</p>
+      <div class="proj-tags"><span class="proj-tag">Nessus</span><span class="proj-tag">OpenVAS</span><span class="proj-tag">Python</span><span class="proj-tag">Bash</span><span class="proj-tag">CVE</span></div>
+      <div class="proj-links"><a href="https://github.com/sahme24/vuln-assessment-lab" target="_blank" class="proj-link"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>GitHub</a></div>
+    </div>
+    <div class="proj-card reveal">
+      <div class="proj-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8"><path d="M12 2L8 8H4l4 4-2 8 6-4 6 4-2-8 4-4h-4L12 2z"/></svg></div>
+      <h3>Rocket Subsystem Status Monitor</h3>
+      <p>Real-time embedded C++ application monitoring rocket subsystem telemetry including power, propulsion, avionics, and communications. Implements state machines and fault-tolerance logic for mission-critical hardware.</p>
+      <div class="proj-tags"><span class="proj-tag">C++</span><span class="proj-tag">Embedded</span><span class="proj-tag">Telemetry</span><span class="proj-tag">Real-time</span><span class="proj-tag">State Machine</span></div>
+      <div class="proj-links"><a href="https://github.com/sahme3/Rocket_Subsystems" target="_blank" class="proj-link"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>GitHub</a></div>
+    </div>
+    <div class=""proj-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8m-4-4v4"/></svg></div>
+      <h3>Pong Frenzy Multiplayer Web App</h3>
+      <p>Fast-paced multiplayer Pong game built with vanilla JavaScript and HTML5 Canvas. Features real-time two-player gameplay, score tracking, smooth animations, and responsive design.</p>
+      <div class="proj-tags"><span class="proj-tag">JavaScript</span><span class="proj-tag">HTML5</span><span class="proj-tag">CSS3</span><span class="proj-tag">Canvas</span><span class="proj-tag">Game Dev</span></div>
+      <div class="proj-links"><a href="https://pongfrenzy-multiplayer.surge.sh/" target="_blank" class="proj-link"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Live Demo</a></div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+<section id="skills">
+  <p class="section-eyebrow reveal">toolkit</p>
+  <h2 class="section-heading reveal">Skills &amp; Technologies</h2>
+  <div class="skills-grid">
+    <div class="skill-cat reveal"><h3>Security</h3><div class="skill-list"><span class="skill-pill">Penetration Testing</span><span class="skill-pill">Vulnerability Assessment</span><span class="skill-pill">SIEM / Splunk</span><span class="skill-pill">Wireshark</span><span class="skill-pill">Nessus</span><span class="skill-pill">OpenVAS</span><span class="skill-pill">Metasploit</span><span class="skill-pill">Burp Suite</span></div></div>
+    <div class="skill-cat reveal"><h3>Cloud &amp; Infrastructure</h3><div class="skill-list"><span class="skill-pill">AWS (IAM, S3, EC2)</span><span class="skill-pill">VMware ESXi</span><span class="skill-pill">vSphere</span><span class="skill-pill">Active Directory</span><span class="skill-pill">Windows Server 2019</span><span class="skill-pill">Linux / Ubuntu</span><span class="skill-pill">Docker</span></div></div>
+    <div class="skill-cat reveal"><h3>Programming</h3><div class="skill-list"><span class="skill-pill">Python</span><span class="skill-pill">C++</span><span class="skill-pill">Bash / Shell</span><span class="skill-pill">JavaScript</span><span class="skill-pill">HTML5 / CSS3</span><span class="skill-pill">SQL</span><span class="skill-pill">PowerShell</span></div></div>
+    <div class="skill-cat reveal"><h3>Certifications &amp; Concepts</h3><div class="skill-list"><span class="skill-pill">CompTIA Security+ (in progress)</span><span class="skill-pill">Level II Secret Clearance</span><span class="skill-pill">OWASP Top 10</span><span class="skill-pill">MITRE ATT&amp;CK</span><span class="skill-pill">Network Protocols</span><span class="skill-pill">Cryptography</span></div></div>
+  </div>
+</section>
+<div class="divider"></div>
+<section id="quiz">
+  <p class="section-eyebrow reveal">test your knowledge</p>
+  <h2 class="section-heading reveal">Cybersecurity Challenge</h2>
+  <div class="quiz-wrap reveal">
+    <div class="quiz-box">
+      <div class="quiz-progress"><div class="quiz-progress-bar" id="qBar" style="width:0%"></div></div>
+      <div class="quiz-header">
+        <div class="quiz-q-label"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg><span id="qLabel">Question 1 of 5</span></div>
+        <div class="quiz-badges"><span id="qDiff" class="badge-diff badge-easy">Easy</span><span id="qScore" class="badge-score">Score: 0</span></div>
+      </div>
+      <div id="quizArea">
+        <p class="quiz-question" id="qText"></p>
+        <div class="quiz-options" id="qOptions"></div>
+        <p class="quiz-feedback" id="qFeedback"></p>
+        <button class="quiz-next" id="qNext">Next Question &#8594;</button>
+      </div>
+      <div class="quiz-result" id="quizResult" style="display:none">
+        <div class="score-big" id="rScore"></div>
+        <div class="score-sub" id="rSub"></div>
+        <p class="result-msg" id="rMsg"></p>
+        <button class="quiz-restart" id="qRestart">Try Again</button>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+<section id="contact">
+  <p class="section-eyebrow reveal">get in touch</p>
+  <h2 class="section-heading reveal">Contact</h2>
+  <div class="contact-wrap">
+    <div class="contact-info">
+      <div class="contact-item reveal"><div class="contact-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div><span>Email</span><strong>sahme2456@gmail.com</strong></div></div>
+      <div class="contact-item reveal"><div class="contact-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg></div><div><span>GitHub</span><strong>github.com/sahme24</strong></div></div>
+      <div class="contact-item reveal"><div class="contact-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div><div><span>LinkedIn</span><strong>linkedin.com/in/salman-ahmed</strong></div></div>
+      <div class="contact-item reveal"><div class="contact-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div><span>Location</span><strong>Ottawa, Ontario, Canada</strong></div></div>
+    </div>
+    <form class="contact-form reveal" onsubmit="return false">
+      <div class="form-row">
+        <div class="form-group"><label>First Name</label><input type="text" placeholder="John" /></div>
+        <div class="form-group"><label>Last Name</label><input type="text" placeholder="Doe" /></div>
+      </div>
+      <div class="form-group"><label>Email</label><input type="email" placeholder="john@example.com" /></div>
+      <div class="form-group"><label>Subject</label><input type="text" placeholder="Internship Opportunity" /></div>
+      <div class="form-group"><label>Message</label><textarea rows="4" placeholder="Tell me about the opportunity..."></textarea></div>
+      <button type="submit" class="btn-send">Send Message</button>
+    </form>
+  </div>
+</section>
+<footer>
+  <p>Designed &amp; built by <a href="#">Salman Ahmed</a> &mdash; Cybersecurity &amp; Infrastructure</p>
+  <p style="margin-top:.4rem">Ottawa, Ontario &bull; sahme2456@gmail.com</p>
+</footer>
+<script>
+const themeBtn=document.getElementById('themeBtn');
+themeBtn.addEventListener('click',()=>{document.body.classList.toggle('light');localStorage.setItem('theme',document.body.classList.contains('light')?'light':'dark');});
+if(localStorage.getItem('theme')==='light')document.body.classList.add('light');
+const navBurger=document.getElementById('navBurger');
+const navMobile=document.getElementById('navMobile');
+navBurger.addEventListener('click',()=>navMobile.classList.toggle('open'));
+navMobile.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>navMobile.classList.remove('open')));
+const roles=['Cybersecurity Student','Infrastructure Co-op @ DND','Cloud Security Enthusiast','Network Defense Practitioner'];
+let ri=0,ci=0,deleting=false;
+const tw=document.getElementById('typewriter');
+function type(){const cur=roles[ri];if(!deleting){tw.textContent=cur.slice(0,++ci);if(ci===cur.length){deleting=true;setTimeout(type,1800);return;}}else{tw.textContent=cur.slice(0,--ci);if(ci===0){deleting=false;ri=(ri+1)%roles.length;}}setTimeout(type,deleting?40:80);}
+type();
+const revealEls=document.querySelectorAll('.reveal');
+const observer=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target);}});},{threshold:0.1});
+revealEls.forEach(el=>observer.observe(el));
+const questions=[
+  {q:'What does the "S" in HTTPS stand for?',opts:['Secure','Standard','Simple','Static'],ans:0,diff:'Easy',feedback:'HTTPS uses TLS/SSL to encrypt data between your browser and the server.'},
+  {q:'Which type of attack involves sending fraudulent emails to steal credentials?',opts:['Spoofing','Phishing','Pharming','Sniffing'],ans:1,diff:'Easy',feedback:'Phishing emails impersonate trusted entities to trick users into revealing passwords or personal data.'},
+  {q:'What does CVE stand for in cybersecurity?',opts:['Common Vulnerability Exploits','Common Virus Entries','Common Vulnerabilities and Exposures','Classified Vulnerability Entries'],ans:2,diff:'Medium',feedback:'CVE is a public list of known cybersecurity vulnerabilities maintained by MITRE Corporation.'},
+  {q:'What is the primary purpose of a DMZ (Demilitarized Zone) in network security?',opts:['To isolate publicly accessible servers from the internal network','To encrypt all outbound traffic','To monitor employee internet usage','To store encrypted backups'],ans:0,diff:'Medium',feedback:'A DMZ places internet-facing services like web servers between two firewalls, limiting exposure of the internal network.'},
+  {q:"What type of malware encrypts a victim's files and demands payment for the decryption key?",opts:['Spyware','Adware','Worm','Ransomware'],ans:3,diff:'Hard',feedback:"Ransomware like WannaCry or LockBit encrypts files and demands cryptocurrency payments. Always keep offline backups!"}
+];
+let qIdx=0,score=0,answered=false;
+function renderQuestion(){const q=questions[qIdx];document.getElementById('qLabel').textContent='Question '+(qIdx+1)+' of '+questions.length;document.getElementById('qBar').style.width=(qIdx/questions.length*100)+'%';const diffEl=document.getElementById('qDiff');diffEl.textContent=q.diff;diffEl.className='badge-diff badge-'+q.diff.toLowerCase();document.getElementById('qScore').textContent='Score: '+score;document.getElementById('qText').textContent=q.q;document.getElementById('qFeedback').textContent='';const qNext=document.getElementById('qNext');qNext.textContent=qIdx===questions.length-1?'See Results':'Next Question →';qNext.classList.remove('active');answered=false;const opts=document.getElementById('qOptions');opts.innerHTML='';q.opts.forEach((opt,i)=>{const btn=document.createElement('button');btn.className='quiz-opt';btn.textContent=opt;btn.addEventListener('click',()=>selectAnswer(i));opts.appendChild(btn);});}
+function selectAnswer(i){if(answered)return;answered=true;const q=questions[qIdx];const btns=document.querySelectorAll('.quiz-opt');btns.forEach(b=>b.disabled=true);if(i===q.ans){btns[i].classList.add('correct');score++;document.getElementById('qScore').textContent='Score: '+score;}else{btns[i].classList.add('wrong');btns[q.ans].classList.add('reveal');}document.getElementById('qFeedback').textContent=q.feedback;document.getElementById('qNext').classList.add('active');}
+function showResult(){document.getElementById('quizArea').style.display='none';const res=document.getElementById('quizResult');res.style.display='block';document.getElementById('qBar').style.width='100%';document.getElementById('rScore').textContent=score+'/'+questions.length;document.getElementById('rSub').textContent=Math.round(score/questions.length*100)+'% correct';let msg='';if(score===questions.length)msg='Perfect score! You\'re a cybersecurity expert.';else if(score>=4)msg='Great work! You have solid cybersecurity knowledge.';else if(score>=3)msg='Good effort! Keep studying to sharpen your skills.';else msg='Keep learning! Cybersecurity is a deep field. Every question is a lesson.';document.getElementById('rMsg').textContent=msg;}
+document.getElementById('qNext').addEventListener('click',()=>{if(!answered)return;qIdx++;if(qIdx>=questions.length){showResult();return;}renderQuestion();});
+document.getElementById('qRestart').addEventListener('click',()=>{qIdx=0;score=0;answered=false;document.getElementById('quizArea').style.display='block';document.getElementById('quizResult').style.display='none';renderQuestion();});
+renderQuestion();
+</script>
+</body>
+  </html>
