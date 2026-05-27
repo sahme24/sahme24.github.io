@@ -445,6 +445,21 @@ footer a:hover{color:var(--accent)}
 }
 .term-hint.hidden{opacity:0}
 
+
+/* ── TERMINAL BUTTON ── */
+#term-toggle-btn{
+  position:fixed;bottom:2rem;left:2rem;z-index:998;
+  display:flex;align-items:center;gap:.5rem;
+  background:rgba(0,255,157,.08);border:1px solid rgba(0,255,157,.3);
+  color:var(--accent);font-size:.78rem;font-weight:700;
+  font-family:'SF Mono','Fira Code',monospace;
+  padding:.5rem 1rem;border-radius:8px;cursor:pointer;
+  transition:all .2s;backdrop-filter:blur(8px);
+  letter-spacing:.03em;
+}
+#term-toggle-btn:hover{background:rgba(0,255,157,.15);border-color:var(--accent);transform:translateY(-2px)}
+#term-toggle-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+
 </style>
 </head>
 <body>
@@ -1285,14 +1300,23 @@ if (backTop) backTop.addEventListener('click', () => window.scrollTo({top:0,beha
   overlay.addEventListener('click', e => { if (e.target === overlay) closeTerminal(); });
   if (closeBtn) closeBtn.addEventListener('click', closeTerminal);
 
+  // Terminal toggle button
+  const toggleBtn = document.getElementById('term-toggle-btn');
+  if (toggleBtn) toggleBtn.addEventListener('click', () => isOpen ? closeTerminal() : openTerminal());
+
   // Show hint after 3s if not opened
   setTimeout(() => { if (hint && !isOpen) hint.style.opacity = '.45'; }, 3000);
 })();
 
 </script>
 
+<!-- TERMINAL BUTTON -->
+<button id="term-toggle-btn" title="Open terminal (or press `)">
+  <svg viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+  terminal
+</button>
 <!-- TERMINAL HINT -->
-<div class="term-hint" id="termHint">press ` to open terminal</div>
+
 
 <!-- TERMINAL -->
 <div id="terminal-overlay">
