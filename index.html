@@ -373,6 +373,78 @@ footer a:hover{color:var(--accent)}
 .footer-links a{display:flex;align-items:center;gap:.4rem;font-size:.82rem}
 .footer-links a svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
+
+/* ── TERMINAL ── */
+#terminal-overlay{
+  position:fixed;inset:0;z-index:999;
+  background:rgba(0,0,0,.55);backdrop-filter:blur(4px);
+  display:flex;align-items:flex-end;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .25s;
+  padding-bottom:0;
+}
+#terminal-overlay.open{opacity:1;pointer-events:all}
+#terminal-window{
+  width:min(860px,96vw);height:min(480px,70vh);
+  background:#0d1117;border:1px solid #30363d;
+  border-radius:12px 12px 0 0;
+  display:flex;flex-direction:column;
+  transform:translateY(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);
+  box-shadow:0 -20px 60px rgba(0,0,0,.6);
+  overflow:hidden;
+}
+#terminal-overlay.open #terminal-window{transform:translateY(0)}
+.term-titlebar{
+  display:flex;align-items:center;gap:.6rem;
+  padding:.65rem 1rem;background:#161b22;
+  border-bottom:1px solid #21262d;flex-shrink:0;
+}
+.term-dot{width:12px;height:12px;border-radius:50%}
+.term-dot.red{background:#ff5f57}.term-dot.yellow{background:#ffbd2e}.term-dot.green{background:#28c840}
+.term-title{
+  flex:1;text-align:center;font-size:.78rem;color:#8b949e;
+  font-family:'SF Mono','Fira Code',monospace;
+}
+.term-close-btn{
+  background:none;border:none;cursor:pointer;color:#8b949e;
+  font-size:1rem;padding:0 .2rem;line-height:1;
+}
+.term-close-btn:hover{color:#fff}
+#terminal-body{
+  flex:1;overflow-y:auto;padding:1.2rem 1.4rem .6rem;
+  font-family:'SF Mono','Fira Code','Cascadia Code',monospace;
+  font-size:.82rem;line-height:1.7;color:#c9d1d9;
+  scroll-behavior:smooth;
+}
+#terminal-body::-webkit-scrollbar{width:4px}
+#terminal-body::-webkit-scrollbar-thumb{background:#30363d;border-radius:2px}
+.term-line{margin-bottom:.05rem;white-space:pre-wrap;word-break:break-all}
+.term-prompt{color:#00ff9d;font-weight:700}
+.term-cmd{color:#e6edf3}
+.term-out{color:#8b949e}
+.term-out.success{color:#3fb950}
+.term-out.warn{color:#d29922}
+.term-out.error{color:#f85149}
+.term-out.accent{color:#00ff9d}
+.term-out.info{color:#58a6ff}
+.term-out.classified{color:#ff5f57;font-weight:700;letter-spacing:.05em}
+.term-input-row{
+  display:flex;align-items:center;gap:.4rem;
+  padding:.4rem 1.4rem .8rem;flex-shrink:0;
+  font-family:'SF Mono','Fira Code',monospace;font-size:.82rem;
+}
+.term-input-prompt{color:#00ff9d;font-weight:700;white-space:nowrap;flex-shrink:0}
+#term-input{
+  flex:1;background:none;border:none;outline:none;
+  color:#e6edf3;font-family:inherit;font-size:inherit;caret-color:#00ff9d;
+}
+.term-hint{
+  position:fixed;bottom:1.2rem;right:1.4rem;z-index:998;
+  font-size:.72rem;color:var(--muted);opacity:.5;
+  font-family:'SF Mono','Fira Code',monospace;
+  transition:opacity .2s;pointer-events:none;
+}
+.term-hint.hidden{opacity:0}
+
 </style>
 </head>
 <body>
@@ -392,7 +464,7 @@ footer a:hover{color:var(--accent)}
     <button class="theme-btn" id="themeBtn">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
     </button>
-    <a href="Resume_Salman_Ahmed_20.pdf" target="_blank" class="resume-btn">Resume</a>
+    
     <button class="hamburger" id="navBurger" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
@@ -918,7 +990,328 @@ window.addEventListener('scroll', () => {
 // Back to top
 if (backTop) backTop.addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
 
+
+// ── TERMINAL EASTER EGG ──
+(function(){
+  const overlay = document.getElementById('terminal-overlay');
+  const body    = document.getElementById('terminal-body');
+  const input   = document.getElementById('term-input');
+  const hint    = document.getElementById('termHint');
+  const closeBtn= document.getElementById('termCloseBtn');
+  let history   = [], histIdx = -1, isOpen = false;
+
+  const PROMPT = '<span class="term-prompt">salman@portfolio:~$</span> ';
+
+  const BOOT = [
+    {t:'accent', s:'  ___  __   __   __  ___  ___  ___   __  ___  __  '},
+    {t:'accent', s:' / __]/  \\ |  \\ |  \\/ __]|_ _||_ _||  \\/ __]|  \\ '},
+    {t:'accent', s:'| (__ | O || D  )   (| |__  | |  | || D (| |__| D )'},
+    {t:'accent', s:' \\___||___||_  /|_\\_|\\___] |_|  |_||   /\\___||  /'},
+    {t:'accent', s:'            |_|                       |_|       |_| '},
+    {t:'out',    s:''},
+    {t:'info',   s:'  Portfolio OS v2.6  |  kernel: salman-1.0  |  uptime: always'},
+    {t:'out',    s:'  Type <span class="term-out accent">help</span> to see available commands.'},
+    {t:'out',    s:''},
+  ];
+
+  const COMMANDS = {
+    help: () => [
+      {t:'accent', s:'Available commands:'},
+      {t:'out',    s:'  whoami          — who is this guy'},
+      {t:'out',    s:'  ls              — list files'},
+      {t:'out',    s:'  cat [file]      — read a file'},
+      {t:'out',    s:'  ls projects/    — list projects'},
+      {t:'out',    s:'  skills          — technical skills'},
+      {t:'out',    s:'  contact         — get in touch'},
+      {t:'out',    s:'  nmap 127.0.0.1  — port scan (trust me)'},
+      {t:'out',    s:'  ssh salman@dnd  — go ahead, try it'},
+      {t:'out',    s:'  sudo su         — classic'},
+      {t:'out',    s:'  hack            — 🤫'},
+      {t:'out',    s:'  open github     — open my GitHub'},
+      {t:'out',    s:'  open linkedin   — open my LinkedIn'},
+      {t:'out',    s:'  clear           — clear terminal'},
+      {t:'out',    s:'  exit            — close terminal'},
+    ],
+
+    whoami: () => [
+      {t:'success',s:'Salman Ahmed'},
+      {t:'out',    s:''},
+      {t:'out',    s:'  Role        : Computer Science Student @ Carleton University'},
+      {t:'out',    s:'  Co-op       : Infrastructure, Department of National Defence'},
+      {t:'out',    s:'  Clearance   : <span class="term-out classified">LEVEL II SECRET (Active)</span>'},
+      {t:'out',    s:'  Interests   : Cloud Security, Network Defense, Vulnerability Assessment'},
+      {t:'out',    s:'  Status      : <span class="term-out success">● Open to Opportunities</span>'},
+      {t:'out',    s:''},
+      {t:'out',    s:'  Outside of code: soccer, basketball, gym, video games, exploring the world.'},
+    ],
+
+    ls: () => [
+      {t:'info',   s:'resume.txt     clearance.txt     about.txt     skills.txt     contact.txt'},
+      {t:'info',   s:'projects/'},
+    ],
+
+    skills: () => [
+      {t:'accent', s:'Technical Skills:'},
+      {t:'out',    s:'  Languages   : Python, C, Java, Bash, SQL, JavaScript'},
+      {t:'out',    s:'  Security    : Vulnerability Assessment, Network Defense, SIEM'},
+      {t:'out',    s:'  Cloud       : AWS, Azure fundamentals, Linux administration'},
+      {t:'out',    s:'  Tools       : Wireshark, Nmap, Git, Docker, Splunk'},
+      {t:'out',    s:'  Clearance   : <span class="term-out classified">Level II Secret</span>'},
+    ],
+
+    contact: () => [
+      {t:'accent', s:'Contact:'},
+      {t:'out',    s:'  Email    : sahme2456@gmail.com'},
+      {t:'out',    s:'  GitHub   : github.com/sahme24'},
+      {t:'out',    s:'  LinkedIn : linkedin.com/in/salman-ahmed'},
+      {t:'out',    s:'  Location : Canada'},
+    ],
+
+    'ls projects/': () => [
+      {t:'info',   s:'pong-frenzy/             cloud-security-scanner/'},
+      {t:'info',   s:'network-traffic-analytics/   vuln-assessment-lab/'},
+      {t:'info',   s:'rocket-subsystem/'},
+    ],
+
+    'cat resume.txt': () => [
+      {t:'accent', s:'resume.txt'},
+      {t:'out',    s:'───────────────────────────────────────'},
+      {t:'out',    s:'  SALMAN AHMED'},
+      {t:'out',    s:'  Computer Science, Carleton University'},
+      {t:'out',    s:''},
+      {t:'out',    s:'  EXPERIENCE'},
+      {t:'out',    s:'  Infrastructure Co-op — Dept. of National Defence'},
+      {t:'out',    s:'  Cloud security, network defense, vulnerability management'},
+      {t:'out',    s:'  Level II Secret Clearance holder'},
+      {t:'out',    s:''},
+      {t:'out',    s:'  EDUCATION'},
+      {t:'out',    s:'  B.Sc. Computer Science — Carleton University'},
+      {t:'out',    s:'───────────────────────────────────────'},
+      {t:'success',s:'  Use "open github" to see my projects →'},
+    ],
+
+    'cat clearance.txt': () => [
+      {t:'classified',s:'  ████████████████████████████████████████'},
+      {t:'classified',s:'  ██  GOVERNMENT OF CANADA — CLASSIFIED  ██'},
+      {t:'classified',s:'  ████████████████████████████████████████'},
+      {t:'out',       s:''},
+      {t:'warn',      s:'  Clearance Level : LEVEL II SECRET'},
+      {t:'warn',      s:'  Status          : ACTIVE'},
+      {t:'warn',      s:'  Granted by      : [REDACTED]'},
+      {t:'warn',      s:'  Scope           : [REDACTED]'},
+      {t:'out',       s:''},
+      {t:'classified',s:'  ██████████████ [REDACTED] █████████████'},
+      {t:'out',       s:''},
+      {t:'success',   s:'  Access granted. Identity verified.'},
+    ],
+
+    'cat about.txt': () => [
+      {t:'out', s:'I build things. I secure things. I break things (on purpose).'},
+      {t:'out', s:'CS student at Carleton doing infra work at DND.'},
+      {t:'out', s:'Security-minded dev who actually reads CVEs for fun.'},
+    ],
+
+    'cat skills.txt': () => COMMANDS['skills'](),
+
+    'cat contact.txt': () => COMMANDS['contact'](),
+
+    'cat projects/': () => [
+      {t:'error', s:"cat: projects/: Is a directory"},
+      {t:'out',   s:'Try: ls projects/'},
+    ],
+
+    'nmap 127.0.0.1': () => [
+      {t:'out',   s:'Starting Nmap 7.94 ( https://nmap.org )'},
+      {t:'out',   s:'Nmap scan report for localhost (127.0.0.1)'},
+      {t:'out',   s:'Host is up (0.000092s latency).'},
+      {t:'out',   s:''},
+      {t:'out',   s:'PORT      STATE  SERVICE'},
+      {t:'success',s:'80/tcp    open   http'},
+      {t:'success',s:'443/tcp   open   https'},
+      {t:'success',s:'22/tcp    open   ssh'},
+      {t:'warn',   s:'1337/tcp  open   elite'},
+      {t:'out',   s:''},
+      {t:'accent', s:'Nmap done: 1 IP address (1 host up) scanned in 0.04s'},
+    ],
+
+    'ssh salman@dnd': () => [
+      {t:'out',   s:'ssh: connect to host dnd.gc.ca port 22'},
+      {t:'out',   s:'Authenticating as salman...'},
+      {t:'out',   s:''},
+      {t:'error', s:'Permission denied (publickey, certificate).'},
+      {t:'out',   s:''},
+      {t:'warn',  s:'Nice try. That clearance took a full background check.'},
+    ],
+
+    'ssh salman@dnd.gc.ca': () => COMMANDS['ssh salman@dnd'](),
+
+    'sudo su': () => [
+      {t:'warn', s:'[sudo] password for salman:'},
+      {t:'out',  s:''},
+      {t:'success',s:'I\'m already root on this machine. It\'s my portfolio.'},
+    ],
+
+    sudo: () => COMMANDS['sudo su'](),
+
+    'sudo rm -rf /': () => [
+      {t:'error', s:'rm: cannot remove \'/\': Permission denied'},
+      {t:'success',s:'Nice try. I\'m not deleting my own portfolio.'},
+    ],
+
+    hack: () => [
+      {t:'accent',s:'Initializing intrusion sequence...'},
+      {t:'out',   s:''},
+      {t:'success',s:'> Bypassing firewall..............[OK]'},
+      {t:'success',s:'> Escalating privileges...........[OK]'},
+      {t:'success',s:'> Accessing mainframe..............[OK]'},
+      {t:'success',s:'> Downloading the internet.........[OK]'},
+      {t:'out',   s:''},
+      {t:'classified',s:'██████████ ACCESS GRANTED ██████████'},
+      {t:'out',   s:''},
+      {t:'warn',  s:'jk. but seriously, hire me — I know what I\'m doing.'},
+    ],
+
+    'open github': () => {
+      window.open('https://github.com/sahme24', '_blank');
+      return [{t:'success', s:'Opening github.com/sahme24 ...'}];
+    },
+
+    'open linkedin': () => {
+      window.open('https://linkedin.com/in/salman-ahmed', '_blank');
+      return [{t:'success', s:'Opening linkedin.com/in/salman-ahmed ...'}];
+    },
+
+    history: () => history.slice(-20).map((h,i) => ({t:'out', s:`  ${String(i+1).padStart(3)}  ${h}`})),
+
+    clear: () => { body.innerHTML = ''; return []; },
+
+    exit: () => { setTimeout(closeTerminal, 200); return [{t:'out', s:'Goodbye.'}]; },
+    quit: () => COMMANDS['exit'](),
+  };
+
+  function printLines(lines) {
+    lines.forEach(({t, s}) => {
+      const div = document.createElement('div');
+      div.className = 'term-line term-out' + (t !== 'out' ? ' ' + t : '');
+      div.innerHTML = s;
+      body.appendChild(div);
+    });
+    body.scrollTop = body.scrollHeight;
+  }
+
+  function printPromptLine(cmd) {
+    const div = document.createElement('div');
+    div.className = 'term-line';
+    div.innerHTML = PROMPT + '<span class="term-cmd">' + escHtml(cmd) + '</span>';
+    body.appendChild(div);
+  }
+
+  function escHtml(s) {
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  function runCommand(raw) {
+    const cmd = raw.trim().toLowerCase();
+    if (!cmd) return;
+
+    history.push(raw.trim());
+    histIdx = history.length;
+
+    printPromptLine(raw.trim());
+
+    if (cmd === 'clear') { COMMANDS['clear'](); return; }
+
+    const fn = COMMANDS[cmd] || COMMANDS[cmd.replace(/\s+/g,' ')];
+    if (fn) {
+      const out = fn();
+      if (out && out.length) printLines(out);
+    } else {
+      printLines([
+        {t:'error', s:`bash: ${escHtml(raw.trim())}: command not found`},
+        {t:'out',   s:'Type <span class="term-out accent">help</span> to see available commands.'},
+      ]);
+    }
+    printLines([{t:'out', s:''}]);
+  }
+
+  function openTerminal() {
+    if (isOpen) return;
+    isOpen = true;
+    overlay.classList.add('open');
+    if (hint) hint.classList.add('hidden');
+    setTimeout(() => input.focus(), 320);
+    if (!body.innerHTML.trim()) {
+      printLines(BOOT);
+    }
+  }
+
+  function closeTerminal() {
+    isOpen = false;
+    overlay.classList.remove('open');
+    if (hint) hint.classList.remove('hidden');
+  }
+
+  // Backtick toggles terminal
+  document.addEventListener('keydown', e => {
+    if (e.key === '`' && !e.ctrlKey && !e.metaKey && !e.shiftKey) {
+      e.preventDefault();
+      isOpen ? closeTerminal() : openTerminal();
+    }
+    if (e.key === 'Escape' && isOpen) closeTerminal();
+  });
+
+  // Input handling
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      const val = input.value;
+      input.value = '';
+      runCommand(val);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (histIdx > 0) { histIdx--; input.value = history[histIdx]; }
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      if (histIdx < history.length - 1) { histIdx++; input.value = history[histIdx]; }
+      else { histIdx = history.length; input.value = ''; }
+    } else if (e.key === 'Tab') {
+      e.preventDefault();
+      const partial = input.value.toLowerCase();
+      const match = Object.keys(COMMANDS).find(k => k.startsWith(partial) && k !== partial);
+      if (match) input.value = match;
+    }
+  });
+
+  // Click overlay background to close
+  overlay.addEventListener('click', e => { if (e.target === overlay) closeTerminal(); });
+  if (closeBtn) closeBtn.addEventListener('click', closeTerminal);
+
+  // Show hint after 3s if not opened
+  setTimeout(() => { if (hint && !isOpen) hint.style.opacity = '.45'; }, 3000);
+})();
+
 </script>
+
+<!-- TERMINAL HINT -->
+<div class="term-hint" id="termHint">press ` to open terminal</div>
+
+<!-- TERMINAL -->
+<div id="terminal-overlay">
+  <div id="terminal-window">
+    <div class="term-titlebar">
+      <div class="term-dot red"></div>
+      <div class="term-dot yellow"></div>
+      <div class="term-dot green"></div>
+      <div class="term-title">salman@portfolio:~</div>
+      <button class="term-close-btn" id="termCloseBtn">&times;</button>
+    </div>
+    <div id="terminal-body"></div>
+    <div class="term-input-row">
+      <span class="term-input-prompt">salman@portfolio:~$</span>
+      <input id="term-input" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" aria-label="terminal input"/>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
                                                                                                                                                                                                                                                                                 
