@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Salman Ahmed | Cybersecurity & Infrastructure</title>
+<title>Salman Ahmed | CS Student · GoC Cleared · Security Engineer</title>
 <meta name="description" content="Salman Ahmed - Computer Science student at Carleton University. Level II Secret Clearance. Infrastructure Co-op at DND."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -460,6 +460,60 @@ footer a:hover{color:var(--accent)}
 #term-toggle-btn:hover{background:rgba(0,255,157,.15);border-color:var(--accent);transform:translateY(-2px)}
 #term-toggle-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
 
+
+/* ── AVAILABILITY / CLEARANCE BADGES ── */
+.badge-avail{
+  background:rgba(0,255,157,.12);border-color:var(--accent);color:var(--accent);
+  display:inline-flex;align-items:center;gap:.45rem;
+}
+.badge-clearance{
+  background:rgba(0,255,157,.07);border-color:rgba(0,255,157,.5);color:var(--accent);
+  font-weight:700;
+}
+.avail-dot{
+  width:7px;height:7px;border-radius:50%;background:var(--accent);flex-shrink:0;
+  animation:pulse-avail 1.5s ease-in-out infinite;
+}
+@keyframes pulse-avail{
+  0%,100%{box-shadow:0 0 0 0 rgba(0,255,157,.5)}
+  50%{box-shadow:0 0 0 5px rgba(0,255,157,0)}
+}
+/* ── CURRENT BADGE ── */
+.badge-current{
+  display:inline-flex;align-items:center;gap:.35rem;
+  font-size:.72rem;font-weight:700;color:#3fb950;
+  background:rgba(63,185,80,.1);border:1px solid rgba(63,185,80,.3);
+  padding:.15rem .6rem;border-radius:50px;
+}
+.badge-current-dot{
+  width:6px;height:6px;border-radius:50%;background:#3fb950;
+  animation:pulse-avail 1.5s ease-in-out infinite;
+}
+/* ── FEATURED PROJECT BADGE ── */
+.project-featured-badge{
+  position:absolute;top:.8rem;right:.8rem;
+  font-size:.68rem;font-weight:800;color:#000;background:var(--accent);
+  padding:.2rem .6rem;border-radius:50px;letter-spacing:.04em;
+  text-transform:uppercase;
+}
+/* ── PROJECT THUMBNAIL COLORS ── */
+.thumb-security{background:linear-gradient(135deg,#061829 0%,#0d3355 100%)}
+.thumb-network{background:linear-gradient(135deg,#16082a 0%,#2d1159 100%)}
+.thumb-vuln{background:linear-gradient(135deg,#200606 0%,#450d0d 100%)}
+.thumb-rocket{background:linear-gradient(135deg,#060c1e 0%,#0d1e42 100%)}
+.thumb-game{background:linear-gradient(135deg,#022020 0%,#054040 100%)}
+/* ── PROJECT ICON COLORS ── */
+.icon-security .project-thumb-icon{background:rgba(56,139,253,.12);border-color:rgba(56,139,253,.25)}
+.icon-security .project-thumb-icon svg{stroke:#388bfd}
+.icon-network .project-thumb-icon{background:rgba(139,92,246,.12);border-color:rgba(139,92,246,.25)}
+.icon-network .project-thumb-icon svg{stroke:#8b5cf6}
+.icon-vuln .project-thumb-icon{background:rgba(248,81,73,.12);border-color:rgba(248,81,73,.25)}
+.icon-vuln .project-thumb-icon svg{stroke:#f85149}
+.icon-rocket .project-thumb-icon{background:rgba(210,153,34,.12);border-color:rgba(210,153,34,.25)}
+.icon-rocket .project-thumb-icon svg{stroke:#d29922}
+.icon-game .project-thumb-icon{background:rgba(0,255,157,.1);border-color:rgba(0,255,157,.2)}
+.icon-game .project-thumb-icon svg{stroke:var(--accent)}
+
 </style>
 </head>
 <body>
@@ -501,14 +555,14 @@ footer a:hover{color:var(--accent)}
     <h1>Salman<br/><span>Ahmed</span></h1>
     <p class="hero-role"><span id="typewriter"></span><span class="cursor"></span></p>
     <p class="hero-bio">
-      Computer Science student at Carleton University with real experience in Government of Canada infrastructure. Level II Secret Clearance. Into security, cloud, and building things that actually work.
+      CS student at Carleton with an active Level II Secret Clearance, doing real infrastructure work at the Department of National Defence. I focus on cloud security, network defense, and systems that hold up under pressure.
     </p>
     <div class="hero-badges">
-      <span class="badge">Level II Secret Clearance</span>
-      <span class="badge">DND Co-op</span>
+      <span class="badge badge-avail"><span class="avail-dot"></span>Available for Co-op</span>
+      <span class="badge badge-clearance">Level II Secret Clearance</span>
+      <span class="badge">DND Infrastructure</span>
       <span class="badge">Carleton University</span>
       <span class="badge">Cloud Security</span>
-      <span class="badge">Network Defense</span>
     </div>
     <div class="hero-actions">
       <a href="#projects" class="btn-primary">
@@ -523,7 +577,7 @@ footer a:hover{color:var(--accent)}
     <div class="hero-stats">
       <div><div class="stat-num">5+</div><div class="stat-label">Projects</div></div>
       <div><div class="stat-num">L2</div><div class="stat-label">Clearance</div></div>
-      <div><div class="stat-num">2+</div><div class="stat-label">Years Exp</div></div>
+      <div><div class="stat-num">GoC</div><div class="stat-label">Infrastructure</div></div>
     </div>
   </div>
   <div class="hero-image-wrap">
@@ -540,9 +594,9 @@ footer a:hover{color:var(--accent)}
       </div>
       <div class="about-content">
         <p class="section-label">About Me</p>
-        <h2 class="section-title" style="margin-bottom:1.5rem">So, who am I?</h2>
+        <h2 class="section-title" style="margin-bottom:1.5rem">The <span>quick</span> version.</h2>
         <p>I'm <strong>Salman Ahmed</strong>, a Computer Science student at Carleton University doing my Infrastructure Co-op at the Department of National Defence. I hold a Level II Secret Clearance and spend most of my time in the space between cloud security, network defense, and vulnerability assessment.</p>
-        <p>I've built tools that scan cloud environments for misconfigurations, analyzed real network traffic with SIEM pipelines, and written embedded C++ running on mission-critical rocket hardware. If it involves protecting systems or pushing boundaries, I'm in.</p>
+        <p>Outside of DND, I've built tools that catch AWS misconfigurations, set up SIEM pipelines to detect network anomalies, and written embedded C++ for mission-critical rocket hardware. I work close to the metal and I like it that way.</p>
         <p>Outside of code: soccer, basketball, hitting the gym, video games, and exploring the world whenever I get the chance.</p>
         <div class="about-highlights">
           <div class="highlight-card">
@@ -571,7 +625,7 @@ footer a:hover{color:var(--accent)}
 <section id="experience">
   <div class="section-inner">
     <p class="section-label reveal">Work Experience</p>
-    <h2 class="section-title reveal">Where I've <span>worked</span></h2>
+    <h2 class="section-title reveal">Where I've <span>been</span></h2>
     <div class="exp-list">
       <div class="exp-card reveal">
         <div class="exp-icon">
@@ -580,7 +634,7 @@ footer a:hover{color:var(--accent)}
         <div>
           <div class="exp-meta">
             <span class="exp-company">Department of National Defence</span>
-            <span class="exp-duration">2024 &ndash; Present</span>
+            <span class="exp-duration">2024 &ndash; Present</span><span class="badge-current"><span class="badge-current-dot"></span>Current</span>
           </div>
           <div class="exp-role">Infrastructure Co-op, Cybersecurity</div>
           <p class="exp-desc">Working on Government of Canada infrastructure with Level II Secret Clearance. Day-to-day involves cloud security, network defense, and vulnerability management across government systems.</p>
@@ -610,8 +664,9 @@ footer a:hover{color:var(--accent)}
     <h2 class="section-title reveal">Featured <span>Projects</span></h2>
     <div class="projects-grid">
 
-      <div class="project-card reveal">
-        <div class="project-thumb">
+      <div class="project-card reveal icon-security">
+        <div class="project-thumb thumb-security">
+          <span class="project-featured-badge">Featured</span>
           <div class="project-thumb-icon">
             <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
           </div>
@@ -634,8 +689,9 @@ footer a:hover{color:var(--accent)}
         </div>
       </div>
 
-      <div class="project-card reveal">
-        <div class="project-thumb">
+      <div class="project-card reveal icon-network">
+        <div class="project-thumb thumb-network">
+          <span class="project-featured-badge">Featured</span>
           <div class="project-thumb-icon">
             <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
           </div>
@@ -658,8 +714,8 @@ footer a:hover{color:var(--accent)}
         </div>
       </div>
 
-      <div class="project-card reveal">
-        <div class="project-thumb">
+      <div class="project-card reveal icon-vuln">
+        <div class="project-thumb thumb-vuln">
           <div class="project-thumb-icon">
             <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
           </div>
@@ -682,8 +738,8 @@ footer a:hover{color:var(--accent)}
         </div>
       </div>
 
-      <div class="project-card reveal">
-        <div class="project-thumb">
+      <div class="project-card reveal icon-rocket">
+        <div class="project-thumb thumb-rocket">
           <div class="project-thumb-icon">
             <svg viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
           </div>
@@ -707,8 +763,8 @@ footer a:hover{color:var(--accent)}
         </div>
       </div>
 
-      <div class="project-card reveal">
-        <div class="project-thumb">
+      <div class="project-card reveal icon-game">
+        <div class="project-thumb thumb-game">
           <div class="project-thumb-icon">
             <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><circle cx="8" cy="10" r="1"/><circle cx="16" cy="10" r="1"/></svg>
           </div>
@@ -782,8 +838,8 @@ footer a:hover{color:var(--accent)}
       <div class="skill-card reveal">
         <div class="skill-cat">Certs &amp; Concepts</div>
         <div class="skill-pills">
+          <span class="skill-pill" style="border-color:rgba(0,255,157,.4);color:var(--accent)">Level II Secret Clearance</span>
           <span class="skill-pill">CompTIA Security+ (in progress)</span>
-          <span class="skill-pill">Level II Secret Clearance</span>
           <span class="skill-pill">OWASP Top 10</span>
           <span class="skill-pill">MITRE ATT&amp;CK</span>
           <span class="skill-pill">Network Protocols</span>
@@ -837,7 +893,7 @@ footer a:hover{color:var(--accent)}
     <p class="section-label reveal">Get In Touch</p>
     <h2 class="section-title reveal" style="text-align:center">Let's <span>Connect</span></h2>
     <div class="contact-compact reveal">
-      <p class="contact-tagline">Open to co-op opportunities, interesting projects, or just a good conversation about security and infrastructure.</p>
+      <p class="contact-tagline">If you're looking for someone with real government infrastructure experience and an active Secret Clearance, let's talk.</p>
       <div class="contact-links">
         <a href="mailto:sahme2456@gmail.com" class="contact-link-card">
           <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
